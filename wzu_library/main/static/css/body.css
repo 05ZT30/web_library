@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+}
+
+.full_box {
+  padding: 0;
+  border: 0;
+  width: 100%;
+  background-color: #cde7f7;
+}
+
+.head_box {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 1;
+  width: 100%;
+  background-color: #fff;
+}
+
+#login {
+  /* 文字靠右 */
+  text-align: right;
+  height: 25px;
+  margin: auto;
+}
+
+#user {
+  text-align: right;
+  height: 25px;
+  margin: auto;
+}
+
+/* 登录链接样式 */
+#login>a:link {
+  color: rgb(53, 115, 165);
+  text-decoration: none;
+}
+
+#login>a:visited {
+  color: rgb(53, 115, 165);
+}
+
+#login>a:hover {
+  color: rgb(126, 176, 218);
+  text-decoration: overline;
+}
+
+#login>a:active {
+  font-style: italic;
+}
+
+#user>a:link {
+  color: rgb(53, 115, 165);
+  text-decoration: none;
+}
+
+#user>a:visited {
+  color: rgb(53, 115, 165);
+}
+
+#user>a:hover {
+  color: rgb(126, 176, 218);
+  text-decoration: overline;
+}
+
+#user>a:active {
+  font-style: italic;
+}
+
+.tail_box {
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 5px;
+  margin-top: 20px;
+}
