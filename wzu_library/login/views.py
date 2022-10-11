@@ -3,24 +3,24 @@ from django.contrib.auth import authenticate, login, logout
 from . import forms
 # Create your views here.
 def login_view(request):
-    if request.method == 'POST':
-        login_form = forms.UserForm(request.POST)
-        message = '请检查填写的内容！'
-        if login_form.is_valid():
-            username = login_form.cleaned_data.get('username')
-            password = login_form.cleaned_data.get('password')
+    # if request.method == 'POST':
+    login_form = forms.UserForm(request.POST)
+    message = '请检查填写的内容！'
+    if login_form.is_valid():
+        username = login_form.cleaned_data.get('username')
+        password = login_form.cleaned_data.get('password')
 
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                message = '登录成功！'
-                return render(request, 'index.html', locals())
-            else:
-                message = '用户名或密码错误！'
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            message = '登录成功！'
+            return render(request, 'index.html', locals())
         else:
-            return render(request, 'login.html', locals())
+            message = '用户名或密码错误！'
+    else:
+        return render(request, 'login.html', locals())
 
-    login_form = forms.UserForm()
+    # login_form = forms.UserForm()
     return render(request, 'login.html')
 
 # def register_student(request):
