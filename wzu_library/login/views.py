@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from . import forms
 # Create your views here.
 def login_view(request):
@@ -65,8 +65,7 @@ def login_view(request):
 #     return render(request, 'login/register_student.html', locals())
 
 
-def logout(request):
+def logout_view(request):
     if not request.session.get('is_login', None):
-            return redirect("/login/")
-    request.session.flush()
-    return redirect('/index/')
+        logout(request)
+        return redirect('/index/')

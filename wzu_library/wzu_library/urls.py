@@ -60,7 +60,7 @@ urlpatterns = [
     # path('register_manager/', login_views.register_manager),
     # path('register_student/', login_views.register_student),
     # path('register_teacher/', login_views.register_teacher),
-    path('logout/', login_views.logout),
+    path('logout/', login_views.logout_view),
     re_path(r'', include('django_private_chat2.urls',
             namespace='django_private_chat2')),
     path('captcha/', include('captcha.urls')),
