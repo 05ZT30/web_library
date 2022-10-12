@@ -1,28 +1,35 @@
-<!-- {% load static %} -->
-<!doctype html>
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="{% static 'login/css/login.css' %}" rel="stylesheet" /> -->
-  <title>登录</title>
-</head>
-
-<body>
-  <div class="container">
-    <div class="col">
+<!--
+ * @Author: 05ZT30 molly.zheng.work@outlook.com
+ * @Date: 2022-05-02 11:21:14
+ * @LastEditors: 05ZT30 molly.zheng.work@outlook.com
+ * @LastEditTime: 2022-07-12 17:08:02
+ * @FilePath: \mysite\login\templates\login\login.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+{% extends "registration/base_login.html" %}
+{% block title %}学生登录{% endblock %}
+{% load static %}
+{% block css%}
+<link href="{% static 'css/login_form.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/body.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block head_box %}
+<img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
+<div id="login">
+  <!-- <a href="../login_teacher/"> 教师登录 </a> -->
+  <!-- <a href="../login_manager/"> 管理员登录 </a> -->
+</div>
+{%endblock%}
+{% block content%}
+<div class="container">
+  <div class="col">
       <form class="form-login" action="/login/" method="post">
 
-        {% if login_form.captcha.errors %}
-        <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
-        {% elif message %}
-        <div class="alert alert-warning">{{ message }}</div>
-        {% endif %}
+      {% if login_form.captcha.errors %}
+          <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
+      {% elif message %}
+          <div class="alert alert-warning">{{ message }}</div>
+      {% endif %}
 
         {% csrf_token %}
         <h3 class="text-center">欢迎登录</h3>
@@ -43,20 +50,11 @@
         </div>
 
         <div>
-          <a href="/register/" class="text-success "><ins>新用户注册</ins></a>
-          <button type="submit" class="btn btn-primary float-right">登录</button>
+            <a href="/register/" class="text-success " ><ins>新用户注册</ins></a>
+            <button type="submit" class="btn btn-primary float-right">登录</button>
         </div>
       </form>
-    </div>
-  </div> <!-- /container -->
+  </div>
+</div> <!-- /container -->
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  {# 以下三者的引用顺序是固定的#}
-  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-  <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.js"></script>
-  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-</body>
-
-</html>
+{%endblock%}
