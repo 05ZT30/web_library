@@ -16,16 +16,19 @@
     <div class="full_box">
         <div class="head_box">
             <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
-            {% if request.session.user_name %}
+            {% if request.user.is_authenticated %}
+            <div >
+                <a href="/index/" id ="index">主页</a>
+            </div>
             <div id="user">
-                <i>{{ request.session.user_name }}</i>
+                <i>{{ request.user.username}}</i>
                 <a href="/logout/" id="logout">登出</a>
             </div>
             {% else %}
             <div id="login">
-                <a href="../../login"> 学生登录 </a>
-                <a href="../../login_teacher"> 教师登录 </a>
-                <a href="../../login_manager"> 管理员登录 </a>
+                <a href="/login/"> 用户登录 </a>
+                <!-- <a href="/login_teacher/"> 教师登录 </a> -->
+                <!-- <a href="/login_manager/"> 管理员登录 </a> -->
             </div>
             {% endif %}
         </div>
