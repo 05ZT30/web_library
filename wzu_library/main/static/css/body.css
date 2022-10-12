@@ -36,7 +36,25 @@ body {
   margin: auto;
 }
 
-/* 登录链接样式 */
+/* 链接样式 */
+#index>a:link {
+  color: rgb(53, 115, 165);
+  text-decoration: none;
+}
+
+#index>a:visited {
+  color: rgb(53, 115, 165);
+}
+
+#index>a:hover {
+  color: rgb(126, 176, 218);
+  text-decoration: overline;
+}
+
+#index>a:active {
+  font-style: italic;
+}
+
 #login>a:link {
   color: rgb(53, 115, 165);
   text-decoration: none;
