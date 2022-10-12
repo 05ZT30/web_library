@@ -20,7 +20,7 @@ def login_view(request):
         else:
             message = '用户名或密码错误！'
     else:
-        return render(requesivt, 'login.html', locals())
+        return render(request, 'login.html', locals())
 
     # login_form = forms.UserForm()
     return render(request, 'login.html')
