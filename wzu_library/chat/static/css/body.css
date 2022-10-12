@@ -33,7 +33,7 @@ body {
 #user {
   text-align: right;
   height: 25px;
-  margin: auto;
+  margin-top: -25px;
 }
 
 /* 链接样式 */
