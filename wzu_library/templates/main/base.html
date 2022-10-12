@@ -28,11 +28,12 @@
     <div class="full_box">
         <div class="head_box">
             <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
+            <div>
+                <a href="/index/" id="index">主页</a>
+            </div>
             {% if request.user.is_authenticated %}
             <div id="user">
-                <div>
-                    <a href="/index/" id="index">主页</a>
-                </div>
+
                 <i>{{ request.user.username}}</i>
                 <a href="/logout/" id="logout">登出</a>
             </div>
