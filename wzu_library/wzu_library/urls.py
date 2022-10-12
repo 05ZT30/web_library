@@ -13,12 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import imp
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.views.generic import TemplateView, ListView
+from django.views.generic import  ListView
 from main import views as main_views
 from login import views as login_views
-from django.contrib.auth.decorators import login_required
+from chat import views as chat_views
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import re_path, include
@@ -51,7 +52,7 @@ class UsersListView(LoginRequiredMixin, ListView):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/', login_required(TemplateView.as_view(template_name='base.html')), name='home'),
+    path('chat/', chat_views.chat),
     path('index/', main_views.index),
     path('users/', UsersListView.as_view(), name='users_list'),
     path('login/', login_views.login_view),

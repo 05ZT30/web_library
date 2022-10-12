@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import uuid
 from .models import Message
+from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
@@ -14,3 +16,9 @@ def room(request, room_name):
         'chat_messages': chat_messages,
         'room_name': room_name
     })
+
+def chat(request):
+    if not request.session.get('is_login', None):
+        return login_required(TemplateView.as_view(template_name='base.html'))
+    else:
+       return redirect('/index/')
