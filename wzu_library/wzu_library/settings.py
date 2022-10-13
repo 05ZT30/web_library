@@ -141,9 +141,9 @@ SIMPLEUI_HOME_INFO = False
 SIMPLEUI_ANALYSIS = False
 
 # 修改左侧菜单首页设置
-SIMPLEUI_HOME_PAGE = '/index/'  # 指向页面
-SIMPLEUI_HOME_TITLE = '首页' # 首页标题
-SIMPLEUI_HOME_ICON = 'fa fa-code' # 首页图标
+# SIMPLEUI_HOME_PAGE = '/index/'  # 指向页面
+# SIMPLEUI_HOME_TITLE = '首页' # 首页标题
+# SIMPLEUI_HOME_ICON = 'fa fa-code' # 首页图标
 
 # 设置右上角Home图标跳转链接，会以另外一个窗口打开
 SIMPLEUI_INDEX = '/index/'
