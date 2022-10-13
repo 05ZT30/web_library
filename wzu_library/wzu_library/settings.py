@@ -146,7 +146,7 @@ SIMPLEUI_ANALYSIS = False
 # SIMPLEUI_HOME_ICON = 'fa fa-code' # 首页图标
 
 # 设置右上角Home图标跳转链接，会以另外一个窗口打开
-SIMPLEUI_INDEX = '../../main/templates/index'
+SIMPLEUI_INDEX = '/index/'
 
 # Channels
 ASGI_APPLICATION = 'wzu_library.routing.application'
