@@ -27,7 +27,7 @@ body {
   /* 文字靠右 */
   text-align: right;
   height: 25px;
-  margin: auto;
+  margin-top: -25px;
 }
 
 #user {
