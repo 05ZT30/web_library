@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from . import UserForm
+from .forms import UserForm
 from django.contrib.auth.models import Group
 
 users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
@@ -28,8 +28,9 @@ def login_view(request):
                 message = '用户名或密码错误！'
         else:
             return render(request, 'login.html', locals())
-    login_form = UserForm()
-    return render(request, 'login.html')
+    else:
+        login_form = UserForm()
+        return render(request, 'login.html')
 
 # def register_student(request):
 #     if request.session.get('is_login', None):
