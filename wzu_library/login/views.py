@@ -20,7 +20,7 @@ def login_view(request):
             login(request, user)
             message = '登录成功！'
             if user in users_in_manager_group:
-                return render(request,'/admin/',locals())
+                return redirect('/admin/')
             if user in users_in_student_group or user in users_in_teacher_group:
                 #现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
                 #是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
