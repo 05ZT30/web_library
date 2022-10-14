@@ -23,7 +23,13 @@ body {
 .form-login .form-control:focus {
   z-index: 2;
 }
-.form-login input[type="text"] {
+.form-login input[name="username"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 240px;
+}
+.form-login input[name="captcha_1"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
