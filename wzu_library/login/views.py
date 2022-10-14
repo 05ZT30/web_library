@@ -30,7 +30,7 @@ def login_view(request):
             return render(request, 'login.html', locals())
     else:
         login_form = UserForm()
-        return render(request, 'login.html')
+    return render(request, 'login.html',{'form': login_form})
 
 # def register_student(request):
 #     if request.session.get('is_login', None):
