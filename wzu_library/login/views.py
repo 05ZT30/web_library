@@ -9,6 +9,7 @@ users_in_student_group = Group.objects.get(name="Student").user_set.all()
 # Create your views here.
 def login_view(request):
     if request.method == 'POST':
+        print("POST")
         login_form = forms.UserForm(request.POST)
         message = '请检查填写的内容！'
         if login_form.is_valid():
@@ -29,7 +30,7 @@ def login_view(request):
                 message = '用户名或密码错误！'
         else:
             return render(request, 'login.html', locals())
-    
+    print("GET")
     login_form = forms.UserForm()
     return render(request, 'login.html')
 
