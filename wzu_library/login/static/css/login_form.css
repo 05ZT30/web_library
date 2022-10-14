@@ -27,7 +27,7 @@ body {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-   width: 240px;
+  width: 240px;
 }
 .form-login input[type="password"] {
   margin-left: 15px;
