@@ -8,6 +8,7 @@ users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
 users_in_student_group = Group.objects.get(name="Student").user_set.all()
 # Create your views here.
 def login_view(request):
+    login_form = UserForm();
     if request.method == 'POST':
         login_form = UserForm(request.POST)
         message = '请检查填写的内容！'
