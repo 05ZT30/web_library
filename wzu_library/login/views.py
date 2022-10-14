@@ -8,48 +8,29 @@ users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
 users_in_student_group = Group.objects.get(name="Student").user_set.all()
 # Create your views here.
 def login_view(request):
-    login_form = UserForm()
-    if login_form.is_valid():
-        username = login_form.cleaned_data.get('username')
-        password = login_form.cleaned_data.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            message = '登录成功！'
-            if user in users_in_manager_group:
-                return redirect('/admin/')
-            if user in users_in_student_group or user in users_in_teacher_group:
-                #现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
-                #是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
-                return render(request, 'index.html', locals())
+    if request.method == 'POST':
+        login_form = UserForm(request.POST)
+        message = '请检查填写的内容！'
+        if login_form.is_valid():
+            username = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                message = '登录成功！'
+                if user in users_in_manager_group:
+                    return redirect('/admin/')
+                if user in users_in_student_group or user in users_in_teacher_group:
+                    #现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
+                    #是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
+                    return render(request, 'index.html', locals())
+            else:
+                message = '用户名或密码错误！'
         else:
-            message = '用户名或密码错误！'
+            return render(request, 'login.html', locals())
     else:
-       return render(request, 'login.html', locals())
-    #if request.method != 'POST':
-    #if request.method == 'POST':
-    #    login_form = UserForm(request.POST)
-    #    message = '请检查填写的内容！'
-    #    if login_form.is_valid():
-    #        username = login_form.cleaned_data.get('username')
-    #        password = login_form.cleaned_data.get('password')
-    #        user = authenticate(request, username=username, password=password)
-    #        if user is not None:
-    #            login(request, user)
-    #            message = '登录成功！'
-    #            if user in users_in_manager_group:
-    #                return redirect('/admin/')
-    #            if user in users_in_student_group or user in users_in_teacher_group:
-    #                #现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
-    #                #是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
-    #                return render(request, 'index.html', locals())
-    #        else:
-    #            message = '用户名或密码错误！'
-    #    else:
-    #        return render(request, 'login.html', locals())
-    #else:
-    #    login_form = UserForm()
-    #return render(request, 'login.html',{'form': login_form})
+        login_form = UserForm()
+    return render(request, 'login.html', locals())
 
 # def register_student(request):
 #     if request.session.get('is_login', None):
