@@ -22,6 +22,6 @@ class UserRegisterForm(forms.Form):
     password1 = forms.CharField(label="密码", max_length=256, widget=forms.PasswordInput(
         attrs={'class': 'form-control',  'placeholder': "Password"}))
     password2 = forms.CharField(label="密码", max_length=256, widget=forms.PasswordInput(
-        attrs={'class': 'form-control',  'placeholder': "Password"}))
+        attrs={'class': 'form-control',  'placeholder': "Please Confirm Password"}))
     group = forms.ChoiceField(choices=GROUPS_CHOICES)
     captcha = CaptchaField(label='验证码')
