@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm
+from .forms import UserForm,UserRegisterForm
 from django.contrib.auth.models import Group
+from .models import UserModel
 
 users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
 users_in_student_group = Group.objects.get(name="Student").user_set.all()
 # Create your views here.
+
+
 def login_view(request):
     if request.method == 'POST':
         login_form = UserForm(request.POST)
@@ -21,8 +24,8 @@ def login_view(request):
                 if user in users_in_manager_group:
                     return redirect('/admin/')
                 if user in users_in_student_group or user in users_in_teacher_group:
-                    #现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
-                    #是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
+                    # 现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
+                    # 是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
                     return render(request, 'index.html', locals())
             else:
                 message = '用户名或密码错误！'
@@ -32,46 +35,41 @@ def login_view(request):
         login_form = UserForm()
     return render(request, 'login.html', locals())
 
-# def register_student(request):
-#     if request.session.get('is_login', None):
-#         return redirect('/index/')
 
-#     if request.method == 'POST':
-#         register_form = forms.UserForm(request.POST)
-#         message = "请检查填写的内容！"
-#         if register_form.is_valid():
-#             username = register_form.cleaned_data.get('username')
-#             password1 = register_form.cleaned_data.get('password1')
-#             password2 = register_form.cleaned_data.get('password2')
+def register_view(request):
+    if request.session.get('is_login', None):
+        return redirect('/index/')
 
-#             if password1 != password2:
-#                 message = '两次输入的密码不同！'
-#                 return render(request, 'login/register_student.html', locals())
-#             else:
-#                 same_id_user = models.MyStudentUser.objects.filter(
-#                     name=student_id)
-#                 if same_id_user:
-#                     message = '该用户已经存在'
-#                     return render(request, 'login/register_student.html', locals())
-#                 same_email_user = models.MyStudentUser.objects.filter(
-#                     email=email)
-#                 if same_email_user:
-#                     message = '该邮箱已经被注册了！'
-#                     return render(request, 'login/register_student.html', locals())
+    if request.method == 'POST':
+        register_form = UserRegisterForm(request.POST)
+        message = "请检查填写的内容！"
+        if register_form.is_valid():
+            username = register_form.cleaned_data.get('username')
+            password1 = register_form.cleaned_data.get('password1')
+            password2 = register_form.cleaned_data.get('password2')
+            group_select = register_form.cleaned_data.get('group')
+            if password1 != password2:
+                message = '两次输入的密码不同！'
+                return render(request, '/register/', locals())
+            else:
+                samename_user = UserModel.objects.filter(name=username)
+                if samename_user:
+                    message = '该用户已经存在'
+                    return render(request, '/register/', locals())
+                
+                new_user = UserModel()
+                new_user.username = username
+                new_user.password = hash(password1)
+                new_user.save()
+                user = UserModel.objects.get(username=username)
+                group = Group.objects.get(id= group_select)
+                user.groups.add(group)
 
-#                 new_user = models.MyStudentUser()
-#                 new_user.student_id = student_id
-#                 new_user.name = username
-#                 new_user.password = hash_code(password1)
-#                 new_user.email = email
-#                 new_user.sex = sex
-#                 new_user.save()
-
-#                 return redirect('/login/')
-#         else:
-#             return render(request, 'login/register_student.html', locals())
-#     register_form = forms.UserForm()
-#     return render(request, 'login/register_student.html', locals())
+                return redirect('/login/')
+        else:
+            return render(request, '/register/', locals())
+    register_form = UserForm()
+    return render(request, '/register/', locals())
 
 
 def logout_view(request):
