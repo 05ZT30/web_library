@@ -7,13 +7,15 @@
  * @FilePath: \test\mysite\login\templates\login\register.html
 -->
 {% extends "registration/login.html" %}
-{% block title %}学生注册{% endblock %}
+{% block title %}注册{% endblock %}
 {% load static %}
 {% block head_box %}
 <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
+<div>
+  <a href="/index/" id="index">主页</a>
+</div>
 <div id="login">
-    <a href="../login_teacher/"> 教师登录 </a>
-    <a href="../login_manager/"> 管理员登录 </a>
+    <a href="/login/"> 登录 </a>
 </div>
 {%endblock%}
 {% block content%}
@@ -28,12 +30,8 @@
             {% endif %}
 
             {% csrf_token %}
-            <h3 class="text-center">欢迎注册学生</h3>
+            <h3 class="text-center">欢迎注册</h3>
 
-            <div class="form-group">
-                {{ register_form.student_id.label_tag }}
-                {{ register_form.student_id}}
-            </div>
             <div class="form-group">
                 {{ register_form.username.label_tag }}
                 {{ register_form.username}}
@@ -47,12 +45,8 @@
                 {{ register_form.password2 }}
             </div>
             <div class="form-group">
-                {{ register_form.email.label_tag }}
-                {{ register_form.email }}
-            </div>
-            <div class="form-group">
-                {{ register_form.sex.label_tag }}
-                {{ register_form.sex }}
+                {{ register_form.group.label_tag }}
+                {{ register_form.group }}
             </div>
             <div class="form-group">
                 {{ register_form.captcha.label_tag }}

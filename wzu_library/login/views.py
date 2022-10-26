@@ -50,12 +50,12 @@ def register_view(request):
             group_select = register_form.cleaned_data.get('group')
             if password1 != password2:
                 message = '两次输入的密码不同！'
-                return render(request, '/register/', locals())
+                return render(request, 'register.html', locals())
             else:
                 samename_user = UserModel.objects.filter(name=username)
                 if samename_user:
                     message = '该用户已经存在'
-                    return render(request, '/register/', locals())
+                    return render(request, 'register.html', locals())
                 
                 new_user = UserModel()
                 new_user.username = username
@@ -67,9 +67,9 @@ def register_view(request):
 
                 return redirect('/login/')
         else:
-            return render(request, '/register/', locals())
+            return render(request, 'register.html', locals())
     register_form = UserForm()
-    return render(request, '/register/', locals())
+    return render(request, 'register.html', locals())
 
 
 def logout_view(request):
