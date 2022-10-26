@@ -57,7 +57,7 @@ urlpatterns = [
     path('login/', login_views.login_view),
     # path('login_teacher/', login_views.login_teacher),
     # path('login_manager/', login_views.login_manager),
-    path('register', login_views.register_view),
+    path('register/', login_views.register_view),
     # path('register_student/', login_views.register_student),
     # path('register_teacher/', login_views.register_teacher),
     path('logout/', login_views.logout_view),
