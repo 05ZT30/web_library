@@ -64,7 +64,6 @@ def register_view(request):
                 user = UserModel.objects.get(username=username)
                 group = Group.objects.get(id= group_select)
                 user.groups.add(group)
-
                 return redirect('/login/')
         else:
             return render(request, 'register.html', locals())

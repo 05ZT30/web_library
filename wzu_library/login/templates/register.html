@@ -6,7 +6,7 @@
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \test\mysite\login\templates\login\register.html
 -->
-{% extends "registration/login.html" %}
+{% extends "registration/base_login.html" %}
 {% block title %}注册{% endblock %}
 {% load static %}
 {% block head_box %}
@@ -14,7 +14,7 @@
 <div>
   <a href="/index/" id="index">主页</a>
 </div>
-<div id="login">
+<div id="login"> 
     <a href="/login/"> 登录 </a>
 </div>
 {%endblock%}
