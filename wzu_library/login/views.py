@@ -67,7 +67,7 @@ def register_view(request):
                 return redirect('/login/')
         else:
             return render(request, 'register.html', locals())
-    register_form = UserForm()
+    register_form = UserRegisterForm ()
     return render(request, 'register.html', locals())
 
 
