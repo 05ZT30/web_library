@@ -24,8 +24,8 @@
 {%endblock%}
 {% block content%}
 <div class="container">
-    <div class="col">
-        <form class="form-register" action="/register_student/" method="post">
+    <div class="col"
+        <form class="form-register" action="/register/" method="post">
 
             {% if register_form.captcha.errors %}
             <div class="alert alert-warning">{{ register_form.captcha.errors }}</div>
