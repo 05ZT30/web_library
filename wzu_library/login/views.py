@@ -78,5 +78,6 @@ def register_view(request):
 
 def logout_view(request):
     if not request.session.get('is_login', None):
-        request.session.flush()
-        return redirect('/index/')
+        return redirect("/login/")
+    request.session.flush()
+    return redirect("/login/")
