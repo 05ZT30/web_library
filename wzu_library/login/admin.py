@@ -10,10 +10,11 @@ class ProxyResource(resources.ModelResource):
         # export_order：设置导出字段的顺序
         export_order = ('id', 'username')
 
-# 注册小区表
 class UserManage(ImportExportActionModelAdmin):
+    list_display = ('id','username')
     list_per_page = 5
     resource_class = ProxyResource
+    search_fields = ['username']
 
 admin.site.register(UserModel, UserManage)
 admin.site.site_header="管理后台"
