@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm,UserRegisterForm
 from django.contrib.auth.models import Group
-from .models import UserModel
+from login.models import Person as UserModel 
 
 users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
@@ -11,24 +11,29 @@ users_in_student_group = Group.objects.get(name="Student").user_set.all()
 
 
 def login_view(request):
+    if request.session.get('is_login',None):
+       return render(request, 'index.html', locals())
     if request.method == 'POST':
         login_form = UserForm(request.POST)
         message = '请检查填写的内容！'
         if login_form.is_valid():
             username = login_form.cleaned_data.get('username')
             password = login_form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                message = '登录成功！'
-                if user in users_in_manager_group:
-                    return redirect('/admin/')
-                if user in users_in_student_group or user in users_in_teacher_group:
-                    # 现在chat登录之后也会跳转到主页，chat自身检查并回到刚才的页面这个url失效
-                    # 是否可以通过弹窗让用户选择是否需要跳转到主页，这样子就可以让chat跳转到源页面了
-                    return render(request, 'index.html', locals())
+
+            try:
+                user = UserModel.objects.get(username=username)
+            except :
+                message = '用户不存在！'
+                return render(request, 'login.html', locals())
+
+            if user.password == password:
+                #TODO 增加密码加密
+                request.session['is_login'] = True
+                request.session['username'] = username
+                return render(request, 'index.html', locals())
             else:
-                message = '用户名或密码错误！'
+                message = '密码不正确！'
+                return render(request, 'login.html', locals())
         else:
             return render(request, 'login.html', locals())
     else:
@@ -73,5 +78,5 @@ def register_view(request):
 
 def logout_view(request):
     if not request.session.get('is_login', None):
-        logout(request)
+        request.session.flush()
         return redirect('/index/')

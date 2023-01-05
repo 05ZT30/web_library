@@ -29,9 +29,9 @@
         <div class="head_box">
             <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="250px" alt="加载失败" />
             <a href="/chat/" id ="chat">聊天</a>
-            {% if request.user.is_authenticated %}
+            {% if request.session.is_login %}
             <div id="user">
-                <i>{{ request.user.username}}</i>
+                <i>{{ request.session.username}}</i>
                 <a href="/logout/" id="logout">登出</a>
             </div>
             {% else %}

@@ -10,8 +10,9 @@ from django.contrib.auth import get_user_model
 from typing import Optional, Any
 from django.db.models import Q
 import uuid
+from login.models import Person as UserModel 
 
-UserModel: AbstractBaseUser = get_user_model()
+# UserModel: AbstractBaseUser = get_user_model()
 
 
 def user_directory_path(instance, filename):
