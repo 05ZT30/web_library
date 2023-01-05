@@ -2,9 +2,9 @@ from django import forms
 from captcha.fields import CaptchaField
 
 GROUPS_CHOICES = (
-    (1, "Manager"),
-    (2, "Teacher"),
-    (3, "Student"),
+    ("Manager","管理员"),
+    ("Teacher","教师"),
+    ("Student","学生"),
 )
 
 

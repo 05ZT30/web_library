@@ -57,18 +57,24 @@ def register_view(request):
                 message = '两次输入的密码不同！'
                 return render(request, 'register.html', locals())
             else:
-                samename_user = UserModel.objects.filter(name=username)
+                samename_user = UserModel.objects.filter(username=username)
                 if samename_user:
                     message = '该用户已经存在'
                     return render(request, 'register.html', locals())
                 
+                try:
+                    group = Group.objects.get(name = group_select)
+                except:
+                    Group.objects.create(name = group_select)
+                    group = Group.objects.get(name = group_select)
+                    
                 new_user = UserModel()
                 new_user.username = username
                 new_user.password = hash(password1)
+                # new_user.group = group
                 new_user.save()
                 user = UserModel.objects.get(username=username)
-                group = Group.objects.get(id= group_select)
-                user.groups.add(group)
+                group.user_set.add(user)
                 return redirect('/login/')
         else:
             return render(request, 'register.html', locals())
