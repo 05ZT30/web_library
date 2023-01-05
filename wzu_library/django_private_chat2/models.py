@@ -40,8 +40,8 @@ class DialogsModel(TimeStampedModel):
 
     class Meta:
         unique_together = (('user1', 'user2'), ('user2', 'user1'))
-        verbose_name = _("Dialog")
-        verbose_name_plural = _("Dialogs")
+        verbose_name = _("对话")
+        verbose_name_plural = _("所有对话")
 
     def __str__(self):
         return _("Dialog between ") + f"{self.user1_id}, {self.user2_id}"
@@ -93,8 +93,8 @@ class MessageModel(TimeStampedModel, SoftDeletableModel):
 
     class Meta:
         ordering = ('-created',)
-        verbose_name = _("Message")
-        verbose_name_plural = _("Messages")
+        verbose_name = _("对话信息")
+        verbose_name_plural = _("所有对话信息")
 
 # TODO:
 # Possible features - update with pts
