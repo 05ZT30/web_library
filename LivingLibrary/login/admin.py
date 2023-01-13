@@ -3,7 +3,7 @@ from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 from django.contrib import admin
 from django import forms
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, AbstractBaseUser
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
@@ -69,9 +69,9 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # that reference specific fields on auth.User.
     list_display = ('id','card_id', 'username','email', 'date_of_birth', 'is_admin')
     list_per_page = 5
-    list_filter = ('is_admin',)
+    list_filter = ('is_admin','username','card_id')
     fieldsets = (
-        (None, {'fields': ('username','email', 'password')}),
+        (None, {'fields': ('card_id','username','email', 'password')}),
         ('Personal info', {'fields': ('date_of_birth',)}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
@@ -83,7 +83,7 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
             'fields': ('card_id','username','email', 'date_of_birth', 'password1', 'password2'),
         }),
     )
-    search_fields = ['username']
+    # search_fields = ['username']
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource
@@ -96,3 +96,4 @@ admin.site.register(MyUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+# admin.site.unregister(AbstractBaseUser)

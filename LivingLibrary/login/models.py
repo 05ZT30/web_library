@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, card_id, username, password,date_of_birth):
+    def create_user(self, card_id, username, password, date_of_birth):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -14,8 +14,8 @@ class MyUserManager(BaseUserManager):
         #     raise ValueError('Users must have an email address')
 
         user = self.model(
-            card_id = card_id,
-            username = username,
+            card_id=card_id,
+            username=username,
             password=password,
             # email=self.normalize_email(email),
             date_of_birth=date_of_birth,
@@ -25,14 +25,14 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self,card_id, username, password,date_of_birth):
+    def create_superuser(self, card_id, username, password, date_of_birth):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
-            card_id = card_id,
-            username = username,
+            card_id=card_id,
+            username=username,
             password=password,
             date_of_birth=date_of_birth,
         )
@@ -42,7 +42,7 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
-    card_id = models.CharField(max_length=6,unique=True)
+    card_id = models.CharField(max_length=6, unique=True)
     username = models.CharField(max_length=30)
     email = models.EmailField(
         verbose_name='email address',
@@ -56,7 +56,7 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'card_id'
-    REQUIRED_FIELDS = ['username','password','date_of_birth']
+    REQUIRED_FIELDS = ['username', 'password', 'date_of_birth']
 
     def __str__(self):
         return self.username
