@@ -43,7 +43,7 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser):
     card_id = models.CharField(max_length=6, unique=True)
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30,unique=True)
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -55,8 +55,8 @@ class MyUser(AbstractBaseUser):
 
     objects = MyUserManager()
 
-    USERNAME_FIELD = 'card_id'
-    REQUIRED_FIELDS = ['username', 'password', 'date_of_birth']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['card_id', 'password', 'date_of_birth']
 
     def __str__(self):
         return self.username
