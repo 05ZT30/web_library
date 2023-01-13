@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm,UserRegisterForm
 from django.contrib.auth.models import Group
-from login.models import User 
+from login.models import MyUser 
 
 # users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 # users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
@@ -21,7 +21,7 @@ def login_view(request):
             password = login_form.cleaned_data.get('password')
 
             try:
-                user = User.objects.get(username=username)
+                user = MyUser.objects.get(username=username)
             except :
                 message = '用户不存在！'
                 return render(request, 'login.html', locals())
@@ -68,12 +68,12 @@ def register_view(request):
                     Group.objects.create(name = group_select)
                     group = Group.objects.get(name = group_select)
                     
-                new_user = User()
+                new_user = MyUser()
                 new_user.username = username
                 new_user.password = hash(password1)
                 # new_user.group = group
                 new_user.save()
-                user = User.objects.get(username=username)
+                user = MyUser.objects.get(username=username)
                 group.user_set.add(user)
                 return redirect('/login/')
         else:
