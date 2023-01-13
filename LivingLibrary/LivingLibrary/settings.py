@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-     'simpleui',
+    'simpleui',
     'import_export',
 
     'django.contrib.admin',
@@ -42,12 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'chat',
+    'django_private_chat2',
+
     'main',
     'login',
 
     'bootstrap4',
     'captcha',
-    'django_private_chat2.apps.DjangoPrivateChat2Config',
     'channels',
     'django_extensions',
 ]
@@ -97,6 +98,10 @@ DATABASES = {
         'PASSWORD': 'abc+123456',
         'NAME': 'LivingLibraryDB',
     },
+    # # 取消对外键的检查
+    # 'OPTIONS': {
+    #     "init_command": "SET foreign_key_checks = 0;",
+    # }
 }
 
 

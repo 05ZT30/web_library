@@ -26,10 +26,11 @@ def login_view(request):
                 message = '用户不存在！'
                 return render(request, 'login.html', locals())
 
-            if user.password == password:
+            if user.check_password(password):
                 #TODO 增加密码加密
                 request.session['is_login'] = True
                 request.session['username'] = username
+                login(request,user)
                 return render(request, 'index.html', locals())
             else:
                 message = '密码不正确！'
@@ -86,4 +87,5 @@ def logout_view(request):
     if not request.session.get('is_login', None):
         return redirect("/login/")
     request.session.flush()
+    logout(request)
     return redirect("/login/")
