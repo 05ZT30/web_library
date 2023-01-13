@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'captcha',
-    'django_private_chat2',
+    'django_private_chat2.apps.DjangoPrivateChat2Config',
     'channels',
     'django_extensions',
 ]
