@@ -1,0 +1,170 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* 让图片和表格与显示区域的左侧距离9% ,主体占界面的80%*/
+.body_box {
+  margin-left: 9vw;
+  width: 79vw;
+  height: 899px;
+}
+
+#slider {
+  display: flex;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+  margin: 10px 0 5px 0px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+#slider,
+.slider-item-container,
+.slider-imgs {
+  width: 79vw;
+  height: 500px;
+}
+
+.slider-item-container {
+  position: absolute;
+  list-style-type: none;
+  width: 6000px;
+}
+
+.slider-items {
+  float: left;
+}
+
+.slider-imgs {
+  display: inline-block;
+}
+
+.slider-imgs>img {
+  width: 80vw;
+  height: 500px;
+}
+
+#slider:hover .arrow-container {
+  display: block;
+}
+
+.arrow-container {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  top: 50%;
+  margin-top: -25px;
+  display: none;
+}
+
+.arrow-container>span {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  font-size: 40px;
+  /*display: inline-block;*/
+  text-align: center;
+  line-height: 50px;
+  /* background: rgba(0, 0, 0, 0.2); */
+  color: white;
+}
+
+.left-arrow {
+  left: 0px;
+  cursor: pointer;
+}
+
+.right-arrow {
+  right: 0px;
+  cursor: pointer;
+}
+
+.indicator-container {
+  position: absolute;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -75px;
+  text-align: center;
+}
+
+.indicator {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background: white;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background: rgb(53, 115, 165);
+}
+
+
+.news1 {
+  float: left;
+  background-color: rgb(248, 248, 248);
+  width: 39vw;
+  height: 400px;
+  position: static;
+  border-radius: 10px;
+}
+
+.news2 {
+  float: right;
+  background-color: rgb(248, 248, 248);
+  width: 39vw;
+  height: 400px;
+  position: relative;
+  border-radius: 10px;
+}
+
+/* 标题样式设置 */
+.news_title {
+  margin-top: 15px;
+  height: 50px;
+  list-style: none;
+  text-align: center;
+  font-family: fantasy;
+  font-size: 2em;
+  font-weight: bolder;
+  color: rgb(53, 115, 165);
+  border-bottom: 2px rgb(218, 218, 218) solid;
+}
+
+/* 内容样式设置 */
+.news_items {
+  list-style: none;
+  font-size: 1em;
+  height: 67px;
+  margin-left: 10%;
+  width: 80%;
+  text-align: center;
+  border-bottom: 0.5px rgb(218, 218, 218) solid;
+}
+
+/* 内容超链接样式设置 */
+.news_items>a:link {
+  color: rgb(81, 131, 172);
+  text-decoration: none;
+}
+
+.news_items>a:visited {
+  color: rgb(81, 131, 172);
+}
+
+.news_items>a:hover {
+  color: rgb(126, 176, 218);
+}
+
+.news_items>a:active {
+  font-style: italic;
+}
