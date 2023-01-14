@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm,UserRegisterForm
 from django.contrib.auth.models import Group
-from login.models import MyUser 
+from login.models import MyUser,MyUserManager
 
 # users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 # users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
@@ -50,32 +50,28 @@ def register_view(request):
         register_form = UserRegisterForm(request.POST)
         message = "请检查填写的内容！"
         if register_form.is_valid():
+            card_id = register_form.cleaned_data.get('card_id')
             username = register_form.cleaned_data.get('username')
             password1 = register_form.cleaned_data.get('password1')
             password2 = register_form.cleaned_data.get('password2')
-            group_select = register_form.cleaned_data.get('group')
+            # group_select = register_form.cleaned_data.get('group')
             if password1 != password2:
                 message = '两次输入的密码不同！'
                 return render(request, 'register.html', locals())
             else:
-                samename_user = User.objects.filter(username=username)
+                samename_user = MyUser.objects.filter(username=username)
                 if samename_user:
                     message = '该用户已经存在'
                     return render(request, 'register.html', locals())
                 
-                try:
-                    group = Group.objects.get(name = group_select)
-                except:
-                    Group.objects.create(name = group_select)
-                    group = Group.objects.get(name = group_select)
-                    
-                new_user = MyUser()
-                new_user.username = username
-                new_user.password = hash(password1)
-                # new_user.group = group
+                # try:
+                #     group = Group.objects.get(name = group_select)
+                # except:
+                #     Group.objects.create(name = group_select)
+                #     group = Group.objects.get(name = group_select)
+                
+                new_user = MyUser.objects.create_user(card_id=card_id,username=username,password=password1)
                 new_user.save()
-                user = MyUser.objects.get(username=username)
-                group.user_set.add(user)
                 return redirect('/login/')
         else:
             return render(request, 'register.html', locals())

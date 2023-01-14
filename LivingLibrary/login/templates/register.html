@@ -35,7 +35,10 @@
 
             {% csrf_token %}
             <h3 class="text-center">欢迎注册</h3>
-
+            <div class="form-group">
+                {{ register_form.card_id.label_tag }}
+                {{ register_form.card_id}}
+            </div>
             <div class="form-group">
                 {{ register_form.username.label_tag }}
                 {{ register_form.username}}
