@@ -18,6 +18,7 @@ from django.urls import path, re_path, include
 from django.views.generic import TemplateView, ListView
 from main import views as main_views
 from login import views as login_views
+from teacher import views as teacher_views
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.static import static
 from django.conf import settings
@@ -53,6 +54,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat/', login_required(TemplateView.as_view(template_name='base.html')), name='home'),
     path('index/', main_views.index),
+    path('teacher/', teacher_views.index),
     path('users/', UsersListView.as_view(), name='users_list'),
     path('login/', login_views.login_view),
     path('register/', login_views.register_view),

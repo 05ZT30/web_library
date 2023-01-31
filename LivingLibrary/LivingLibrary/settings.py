@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'main',
     'login',
+    'teacher',
 
     'bootstrap4',
     'captcha',
