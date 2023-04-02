@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'LivingLibrary.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'rm-bp1g64rulfs7e25509o.mysql.rds.aliyuncs.com',
+        'HOST': '110.40.190.72',
         'PORT': '3306',
         'USER': 'zyt',
         'PASSWORD': 'abc+123456',
