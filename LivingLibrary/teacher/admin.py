@@ -63,11 +63,10 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    search_fields = ('catagory')
     list_display = ('id', 'card_id','username', 'catagory', 'email','phone')
     list_per_page = 20
     list_display_links = ('id',)
-    list_filter = ('catagory',)
+    list_filter = ('catagory','username')
     fieldsets = (
         (None, {'fields': ('card_id','username','email', 'password')}),
         ('Personal info', {'fields': ('date_of_birth',)}),
@@ -81,7 +80,6 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
             'fields': ('card_id','username','catagory','email', 'phone', 'password1', 'password2'),
         }),
     )
-    search_fields = ['username']
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource

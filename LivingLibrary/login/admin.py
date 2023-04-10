@@ -69,7 +69,7 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # that reference specific fields on auth.User.
     list_display = ('id','card_id', 'username','email', 'date_of_birth', 'is_admin')
     list_per_page = 20
-    list_filter = ('card_id',)
+    list_filter = ('card_id','username')
     fieldsets = (
         (None, {'fields': ('card_id','username','email', 'password')}),
         ('Personal info', {'fields': ('date_of_birth',)}),
@@ -83,7 +83,7 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
             'fields': ('card_id','username','email', 'date_of_birth', 'password1', 'password2'),
         }),
     )
-    search_fields = ['username']
+    del BaseUserAdmin.search_fields
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource
