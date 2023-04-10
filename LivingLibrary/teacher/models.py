@@ -35,6 +35,7 @@ class MyTeacher(AbstractBaseUser):
         unique=True,
         null=True
     )
+    phone = models.CharField(max_length=11)
     date_of_birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

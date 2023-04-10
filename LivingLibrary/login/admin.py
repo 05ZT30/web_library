@@ -68,8 +68,8 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = ('id','card_id', 'username','email', 'date_of_birth', 'is_admin')
-    list_per_page = 5
-    list_filter = ('is_admin','username','card_id')
+    list_per_page = 20
+    list_filter = ('card_id',)
     fieldsets = (
         (None, {'fields': ('card_id','username','email', 'password')}),
         ('Personal info', {'fields': ('date_of_birth',)}),
@@ -83,11 +83,10 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
             'fields': ('card_id','username','email', 'date_of_birth', 'password1', 'password2'),
         }),
     )
-    # search_fields = ['username']
+    search_fields = ['username']
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource
-
 
 admin.site.site_header = "管理后台"
 admin.site.site_title = "真人图书馆管理后台"

@@ -1,0 +1,70 @@
+<!--
+ * @Author: 05ZT30 molly.zheng.work@outlook.com
+ * @Date: 2022-05-02 11:18:14
+ * @LastEditors: 05ZT30 molly.zheng.work@outlook.com
+ * @LastEditTime: 2022-07-12 17:13:36
+ * @FilePath: \mysite\login\templates\login\index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+{% extends "main/base.html" %}
+{% load static%}
+{% block title %}新闻页{% endblock %}
+{% block css %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock%}
+{% block content %}
+<div>
+    新闻标题
+    {{detail.href}}
+    <iframe src='{{detail.href}}'></iframe>
+
+    
+</div>
+<script>
+    export default {
+         data: {
+              details: {},
+              url: '{{detail.href}}'
+          },
+          created() {
+              // 从接口取到iframe地址
+             this.getDetails({id: this.$route.params.id, type: this.$route.params.type})
+               .then(res => {
+                this.details = res.data.obj;
+                let head = this.details.href.slice(0, 24);
+                if (head === 'https://mp.weixin.qq.com') {// 是微信公众号文章
+                    this.getURL(this.details.href);
+                } else {// 是其它网址直接使用
+                    this.url = this.details.href;
+                }
+            }, rej => {});    
+          },
+          methods: {
+              getURL(url) {
+                let http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+                let realurl = http + '//cors-anywhere.herokuapp.com/' + url;
+                let that = this;
+                $.ajax({
+                    type: 'get',
+                    url: realurl,
+                    success: function (res) {
+                        if (res) {
+                            let data = res;
+                            data = data.replace(/data-src/g, 'src');
+                            let htmlSrc = 'data:text/html;charset=utf-8,' + data; // 解析码解决乱码
+                            that.url = htmlSrc;
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        Toast('好像出错了...');
+                    }
+                });
+             }
+          }
+    }
+</script>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/slider1.js' %}" type="text/javascript"></script>
+{% endblock %}

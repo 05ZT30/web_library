@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserForm,UserRegisterForm
+from .forms import UserForm, UserRegisterForm
 from django.contrib.auth.models import Group
-from login.models import MyUser,MyUserManager
+from login.models import MyUser, MyUserManager
+from teacher.models import MyTeacher
+from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.views.generic.edit import FormView
 
 # users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 # users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
@@ -11,7 +14,7 @@ from login.models import MyUser,MyUserManager
 
 
 def login_view(request):
-    if request.session.get('is_login',None):
+    if request.session.get('is_login', None):
        return render(request, 'index.html', locals())
     if request.method == 'POST':
         login_form = UserForm(request.POST)
@@ -22,15 +25,18 @@ def login_view(request):
 
             try:
                 user = MyUser.objects.get(username=username)
-            except :
-                message = '用户不存在！'
-                return render(request, 'login.html', locals())
+            except:
+                try:
+                    user = MyTeacher.objects.get(username=username)
+                except:
+                    message = '用户不存在！'
+                    return render(request, 'login.html', locals())
 
             if user.check_password(password):
-                #TODO 增加密码加密
+                # TODO 增加密码加密
                 request.session['is_login'] = True
                 request.session['username'] = username
-                login(request,user)
+                login(request, user)
                 return render(request, 'index.html', locals())
             else:
                 message = '密码不正确！'
@@ -63,19 +69,20 @@ def register_view(request):
                 if samename_user:
                     message = '该用户已经存在'
                     return render(request, 'register.html', locals())
-                
+
                 # try:
                 #     group = Group.objects.get(name = group_select)
                 # except:
                 #     Group.objects.create(name = group_select)
                 #     group = Group.objects.get(name = group_select)
-                
-                new_user = MyUser.objects.create_user(card_id=card_id,username=username,password=password1)
+
+                new_user = MyUser.objects.create_user(
+                    card_id=card_id, username=username, password=password1)
                 new_user.save()
                 return redirect('/login/')
         else:
             return render(request, 'register.html', locals())
-    register_form = UserRegisterForm ()
+    register_form = UserRegisterForm()
     return render(request, 'register.html', locals())
 
 

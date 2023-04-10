@@ -1,5 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .models import News
+from .models import roll
+from django.http import  HttpResponse
 
 # Create your views here.
 def index(request):
-     return render(request, 'index.html', locals())
+     new_list=News.objects.all()
+     rollpic=roll.objects.all()
+
+     context={
+          'res':new_list.order_by('-time')[:5],
+          'pic':rollpic
+     }
+     return render(request, 'index.html', context=context)
+
+def detail(request,num):
+     detail=News.objects.get(id=num)
+     context={
+          'detail':detail
+     }
+     return render(request,'news.html',context)
