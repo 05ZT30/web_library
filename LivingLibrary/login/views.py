@@ -3,13 +3,15 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm, UserRegisterForm
 from django.contrib.auth.models import Group
 from login.models import MyUser, MyUserManager
-from teacher.models import MyTeacher
+from .models import MyTeacher
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.views.generic.edit import FormView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+# from django.contrib.auth.views import PasswordRestView
+# from django.contrib.auth.forms import PasswordRestForm
 
 
 # users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
@@ -99,18 +101,14 @@ def logout_view(request):
     return redirect("/login/")
 
 
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, '您的密码已成功更改！')
-            return redirect('change_password')
-        else:
-            messages.error(request, '请更正下面的错误。')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'accounts/change_password.html', {
-        'form': form
-    })
+# class CustomPasswordResetForm(PasswordRestForm):
+#     # 实现'邮箱未注册'的提示
+#     class clean_email(self):
+#         email = self.cleaned_date.get('email', '')
+#         if not User.objects.filter(email=email):
+#             raise forms.ValidationError('邮箱未注册')
+#         return email
+
+# class CustomPasswordResetView(PasswordRestView):
+#     template_name = 'your_passd_reset.html'
+#     form_class = CustomPasswordResetForm

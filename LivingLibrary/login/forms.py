@@ -1,5 +1,8 @@
 from django import forms
 from captcha.fields import CaptchaField
+from django.contrib.auth.forms import PasswordResetForm
+from django.core.exceptions import ValidationError
+# from .models import MyUser,MyTeacher
 
 GROUPS_CHOICES = (
     ("Manager", "管理员"),
@@ -28,4 +31,9 @@ class UserRegisterForm(forms.Form):
     # group = forms.ChoiceField(choices=GROUPS_CHOICES)
     captcha = CaptchaField(label='验证码')
 
-# class PasswordChangeForm(forms.Form):
+# class CustomPasswordResetForm(PasswordResetForm):
+#     def clean_email(self):
+#         email = self.cleaned_data['email']
+#         if not MyUser.objects.filter(email__iexact=email).exists():
+#             raise ValidationError("该邮箱未注册。")
+#         return email

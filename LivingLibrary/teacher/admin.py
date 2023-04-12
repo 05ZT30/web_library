@@ -1,5 +1,5 @@
 from django.contrib.admin import ModelAdmin, site
-from .models import MyTeacher
+from login.models import MyTeacher
 from django import forms
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.core.exceptions import ValidationError
@@ -45,8 +45,8 @@ class TeacherChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyTeacher
-        fields = ('card_id','username','email', 'password', 'date_of_birth',
-                  'is_active', 'is_admin')
+        fields = ('card_id','username','email', 'password', 'date_of_birth','phone','photo',
+                  'is_active')
 
 
 class ProxyResource(resources.ModelResource):
@@ -63,21 +63,21 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('id', 'card_id','username', 'catagory', 'email','phone')
+    list_display = ('id', 'card_id','username', 'catagory', 'email','phone','photo')
     list_per_page = 20
     list_display_links = ('id',)
     list_filter = ('catagory','username')
     fieldsets = (
-        (None, {'fields': ('card_id','username','email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ("基本信息", {'fields': ('card_id','username', 'password')}),
+        ('个人信息', {'fields': ('email','phone','date_of_birth','photo')}),
+        ('权限', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('card_id','username','catagory','email', 'phone', 'password1', 'password2'),
+            'fields': ('card_id','username','catagory','email', 'phone', 'photo','password1', 'password2'),
         }),
     )
     ordering = ['id']
