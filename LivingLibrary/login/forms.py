@@ -27,3 +27,5 @@ class UserRegisterForm(forms.Form):
         attrs={'class': 'form-control',  'placeholder': "Please Confirm Password"}))
     # group = forms.ChoiceField(choices=GROUPS_CHOICES)
     captcha = CaptchaField(label='验证码')
+
+# class PasswordChangeForm(forms.Form):

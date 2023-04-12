@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'simpleui',
     'import_export',
+    'password_reset',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -177,3 +178,11 @@ CHANNEL_LAYERS = {
 }
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'main/static/media').replace('\\', '/')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'molly_zheng253@163.com'
+# EMAIL_HOST_PASSWORD = 'zyt+0530!'
+EMAIL_HOST_PASSWORD = 'YCFCAHSKGOZXJYPD'

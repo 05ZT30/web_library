@@ -28,7 +28,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib.auth.models import AbstractBaseUser
-
+from django.contrib.auth import views as auth_views
 from typing import List
 
 UserModel = get_user_model()
@@ -59,10 +59,16 @@ urlpatterns = [
     path('users/', UsersListView.as_view(), name='users_list'),
     path('login/', login_views.login_view),
     path('register/', login_views.register_view),
+    # path('change_password/', login_views.ChangePasswordView.as_view(), name='change_password'),
+    # path('password_reset/', include('password_reset.urls')),
     path('logout/', login_views.logout_view),
     re_path(r'', include('django_private_chat2.urls',
             namespace='django_private_chat2')),
     path('captcha/', include('captcha.urls')),
+    # path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    # path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    # path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
 
 if settings.DEBUG:

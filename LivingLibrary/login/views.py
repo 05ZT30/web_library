@@ -6,6 +6,11 @@ from login.models import MyUser, MyUserManager
 from teacher.models import MyTeacher
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.views.generic.edit import FormView
+from django.contrib.auth import views as auth_views
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+
 
 # users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
 # users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
@@ -15,7 +20,7 @@ from django.views.generic.edit import FormView
 
 def login_view(request):
     if request.session.get('is_login', None):
-       return render(request, 'index.html', locals())
+        return render(request, 'index.html', locals())
     if request.method == 'POST':
         login_form = UserForm(request.POST)
         message = '请检查填写的内容！'
@@ -92,3 +97,20 @@ def logout_view(request):
     request.session.flush()
     logout(request)
     return redirect("/login/")
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, '您的密码已成功更改！')
+            return redirect('change_password')
+        else:
+            messages.error(request, '请更正下面的错误。')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })
