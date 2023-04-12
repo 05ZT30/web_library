@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'simpleui',
     'import_export',
-    'password_reset',
+    # 'password_reset',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -186,3 +186,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'molly_zheng253@163.com'
 # EMAIL_HOST_PASSWORD = 'zyt+0530!'
 EMAIL_HOST_PASSWORD = 'YCFCAHSKGOZXJYPD'
+DEFAULT_FROM_EMAIL = 'molly_zheng253@163.com'
