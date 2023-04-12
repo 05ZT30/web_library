@@ -14,11 +14,7 @@
 {% endblock%}
 {% block content %}
 <div>
-    新闻标题
-    {{detail.href}}
-    <iframe src='{{detail.href}}'></iframe>
-
-    
+    {{detail.html|safe}}
 </div>
 <script>
     export default {
