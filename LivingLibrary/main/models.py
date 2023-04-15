@@ -4,7 +4,6 @@ from django.db import models
 class News(models.Model):
     title = models.CharField(max_length=254, verbose_name="标题")
     time = models.CharField(max_length=254, verbose_name="时间")
-    href = models.CharField(max_length=254, verbose_name="链接")
     html = models.TextField(verbose_name="前端代码")
     def __str__(self):
         return self.title
