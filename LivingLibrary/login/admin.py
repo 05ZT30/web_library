@@ -14,10 +14,10 @@ from login.models import MyUser
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    username = forms.CharField(max_length=30)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    username = forms.CharField(label='用户名',max_length=30)
+    password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label='Password confirmation', widget=forms.PasswordInput)
+        label='确认密码', widget=forms.PasswordInput)
 
     class Meta:
         model = MyUser
