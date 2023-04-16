@@ -44,7 +44,8 @@ def login_view(request):
                 request.session['is_login'] = True
                 request.session['username'] = username
                 login(request, user)
-                return render(request, 'index.html', locals())
+                return redirect('/index/')
+                # return render(request, 'index.html', locals())
             else:
                 message = '密码不正确！'
                 return render(request, 'login.html', locals())
