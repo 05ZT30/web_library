@@ -63,17 +63,17 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser):
-    card_id = models.CharField(max_length=6, unique=True)
-    username = models.CharField(max_length=30, unique=True)
+    card_id = models.CharField(max_length=6, unique=True, verbose_name='卡号')
+    username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
-        verbose_name='email address',
         max_length=255,
         unique=True,
-        null=True
+        null=True,
+        verbose_name='邮箱'
     )
-    date_of_birth = models.DateField(null=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    date_of_birth = models.DateField(null=True, verbose_name='出生日期')
+    is_active = models.BooleanField(default=True, verbose_name='是否在线')
+    is_admin = models.BooleanField(default=False, verbose_name='是否为管理员')
 
     objects = MyUserManager()
 
@@ -106,21 +106,22 @@ class MyUser(AbstractBaseUser):
 
 
 class MyTeacher(AbstractBaseUser):
-    card_id = models.CharField(max_length=6, unique=True, null=True)
-    username = models.CharField(max_length=30, unique=True)
+    card_id = models.CharField(
+        max_length=6, unique=True, null=True, verbose_name='卡号')
+    username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name='邮箱',
         max_length=255,
         unique=True,
         null=True
     )
-    phone = models.CharField(max_length=11, null=True)
-    date_of_birth = models.DateField(null=True)
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
-    category = models.CharField(max_length=20, null=True)
-    photo = models.ImageField(null=True)
-    introduction = models.TextField(null=True)
+    phone = models.CharField(max_length=11, null=True, verbose_name='电话号码')
+    date_of_birth = models.DateField(null=True, verbose_name='出生日期')
+    is_active = models.BooleanField(default=True, verbose_name='是否在线')
+    is_admin = models.BooleanField(default=False, verbose_name='是否为管理员')
+    category = models.CharField(max_length=20, null=True, verbose_name='专业领域')
+    photo = models.ImageField(null=True, verbose_name='照片')
+    introduction = models.TextField(null=True, verbose_name='简介')
 
     objects = MyUserManager()
 
