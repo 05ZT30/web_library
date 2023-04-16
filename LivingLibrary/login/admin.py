@@ -71,9 +71,9 @@ class UserAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     list_per_page = 20
     list_filter = ('card_id','username')
     fieldsets = (
-        (None, {'fields': ('card_id','username','email', 'password')}),
-        ('Personal info', {'fields': ('date_of_birth',)}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('基本信息', {'fields': ('card_id','username','email', 'password')}),
+        ('个人信息', {'fields': ('date_of_birth',)}),
+        ('权限', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
