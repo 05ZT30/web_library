@@ -32,7 +32,7 @@ from django.contrib.auth import views as auth_views
 from typing import List
 from login.models import MyTeacher,MyUser
 
-UserModel = MyTeacher
+UserModel = get_user_model()
 
 
 class UsersListView(LoginRequiredMixin, ListView):
