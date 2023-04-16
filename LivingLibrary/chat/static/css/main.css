@@ -1672,7 +1672,10 @@ audio:focus {
 .rce-popup-content {
     padding: 8px;
     font-size: 14px;
-    box-sizing: border-box
+    box-sizing: border-box;
+    height: 200px;
+    display: block;
+    overflow: scroll;
 }
 
 .rce-popup-content * {

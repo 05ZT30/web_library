@@ -7,6 +7,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
+
 class TeacherCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -17,7 +18,7 @@ class TeacherCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyTeacher
-        fields = ('username','email', 'date_of_birth')
+        fields = ('username', 'email', 'date_of_birth')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -42,12 +43,12 @@ class TeacherChangeForm(forms.ModelForm):
     disabled password hash display field.
     """
     password = ReadOnlyPasswordHashField(label=("Password"),
-        help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
+                                         help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
 
     class Meta:
         model = MyTeacher
-        fields = ('card_id','username','email', 'password', 'date_of_birth','phone','photo',
-                  'is_active','introduction')
+        fields = ('card_id', 'username', 'category', 'email', 'password', 'date_of_birth', 'phone', 'photo',
+                  'is_active', 'introduction')
 
 
 class ProxyResource(resources.ModelResource):
@@ -56,7 +57,8 @@ class ProxyResource(resources.ModelResource):
         # export_order：设置导出字段的顺序
         export_order = ('id', 'username')
 
-class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
+
+class TeacherAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     # The forms to add and change user instances
     form = TeacherChangeForm
     add_form = TeacherCreationForm
@@ -64,13 +66,15 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('id', 'card_id','username', 'catagory', 'email','phone','photo','introduction')
+    list_display = ('id', 'card_id', 'username', 'category',
+                    'email', 'phone', 'photo', 'introduction')
     list_per_page = 20
     list_display_links = ('id',)
-    list_filter = ('catagory','username')
+    list_filter = ('category', 'username')
     fieldsets = (
-        ("基本信息", {'fields': ('card_id','username', 'password')}),
-        ('个人信息', {'fields': ('email','phone','date_of_birth','photo','introduction')}),
+        ("基本信息", {'fields': ('card_id', 'username', 'password')}),
+        ('个人信息', {'fields': ('email', 'phone',
+         'date_of_birth', 'photo', 'introduction')}),
         ('权限', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -78,11 +82,12 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('card_id','username','catagory','email', 'phone', 'photo','introduction','password1', 'password2'),
+            'fields': ('card_id', 'username', 'category', 'email', 'phone', 'photo', 'introduction', 'password1', 'password2'),
         }),
     )
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource
 
-site.register(MyTeacher,TeacherAdmin )
+
+site.register(MyTeacher, TeacherAdmin)
