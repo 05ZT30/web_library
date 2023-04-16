@@ -186,9 +186,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 elif 'random_id' not in data:
                     return ErrorTypes.MessageParsingError, "'random_id' not present in data"
                 elif data['text'] == '':
-                    return ErrorTypes.TextMessageInvalid, "'text' 180px blank"
+                    return ErrorTypes.TextMessageInvalid, "不能发送空消息"
                 elif len(data['text']) > TEXT_MAX_LENGTH:
-                    return ErrorTypes.TextMessageInvalid, "'text' is too long"
+                    return ErrorTypes.TextMessageInvalid, "文本内容太长"
                 elif not isinstance(data['text'], str):
                     return ErrorTypes.TextMessageInvalid, "'text' should be a string"
                 elif not isinstance(data['user_pk'], str):

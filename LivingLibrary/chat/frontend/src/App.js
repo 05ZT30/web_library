@@ -183,7 +183,7 @@ export class App extends Component {
         };
 
         socket.onopen = function (e) {
-            toast.success("Connected!", toastOptions)
+            toast.success("已连接到服务器!", toastOptions)
             that.setState({socketConnectionState: socket.readyState});
         }
         socket.onmessage = function (e) {
@@ -202,7 +202,7 @@ export class App extends Component {
             }
         };
         socket.onclose = function (e) {
-            toast.info("Disconnected...", toastOptions)
+            toast.info("未连接...", toastOptions)
             that.setState({socketConnectionState: socket.readyState});
             console.log("websocket closed")
         }
@@ -221,13 +221,13 @@ export class App extends Component {
 
     getSocketState() {
         if (this.state.socket.readyState === 0) {
-            return "Connecting..."
+            return "正在连接..."
         } else if (this.state.socket.readyState === 1) {
-            return "Connected"
+            return "已连接"
         } else if (this.state.socket.readyState === 2) {
-            return "Disconnecting..."
+            return "正在断开连接..."
         } else if (this.state.socket.readyState === 3) {
-            return "Disconnected"
+            return "连接已断开"
         }
     }
 
@@ -435,7 +435,7 @@ export class App extends Component {
                         top={
                             <span className='chat-list'>
                                 <Input
-                                    placeholder="Search..."
+                                    placeholder="搜索"
                                     ref={this.setSearchInputRef}
                                     onKeyPress={(e) => {
                                         if (e.charCode !== 13) {
@@ -480,7 +480,7 @@ export class App extends Component {
                         }
                         bottom={
                             <Button type='transparent' color='black' disabled={true}
-                                    text={"Connection state: " + this.getSocketState()}/>
+                                    text={"连接状态: " + this.getSocketState()}/>
                         }/>
                 </div>
                 <div
@@ -492,7 +492,7 @@ export class App extends Component {
                         headerButtons={[{
                             type: 'transparent',
                             color: 'black',
-                            text: 'close',
+                            text: '关闭',
                             icon: {
                                 component: <FaWindowClose/>,
                                 size: 18
@@ -608,7 +608,7 @@ export class App extends Component {
                         }
                         rightButtons={
                             <Button
-                                text='Send'
+                                text='发送'
                                 disabled={this.state.socket.readyState !== 1}
                                 onClick={() => this.performSendingMessage()}/>
                         }/>
