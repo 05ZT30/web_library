@@ -30,8 +30,9 @@ from django.http import JsonResponse
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth import views as auth_views
 from typing import List
+from login.models import MyTeacher,MyUser
 
-UserModel = get_user_model()
+UserModel = MyTeacher
 
 
 class UsersListView(LoginRequiredMixin, ListView):

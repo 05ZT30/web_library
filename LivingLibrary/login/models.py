@@ -120,6 +120,7 @@ class MyTeacher(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     catagory = models.CharField(max_length=20)
     photo = models.ImageField(null=True)
+    introduction = models.TextField(null= True)
 
     objects = MyUserManager()
 

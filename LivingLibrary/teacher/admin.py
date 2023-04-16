@@ -47,7 +47,7 @@ class TeacherChangeForm(forms.ModelForm):
     class Meta:
         model = MyTeacher
         fields = ('card_id','username','email', 'password', 'date_of_birth','phone','photo',
-                  'is_active')
+                  'is_active','introduction')
 
 
 class ProxyResource(resources.ModelResource):
@@ -64,13 +64,13 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('id', 'card_id','username', 'catagory', 'email','phone','photo')
+    list_display = ('id', 'card_id','username', 'catagory', 'email','phone','photo','introduction')
     list_per_page = 20
     list_display_links = ('id',)
     list_filter = ('catagory','username')
     fieldsets = (
         ("基本信息", {'fields': ('card_id','username', 'password')}),
-        ('个人信息', {'fields': ('email','phone','date_of_birth','photo')}),
+        ('个人信息', {'fields': ('email','phone','date_of_birth','photo','introduction')}),
         ('权限', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -78,7 +78,7 @@ class TeacherAdmin(BaseUserAdmin,ImportExportActionModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('card_id','username','catagory','email', 'phone', 'photo','password1', 'password2'),
+            'fields': ('card_id','username','catagory','email', 'phone', 'photo','introduction','password1', 'password2'),
         }),
     )
     ordering = ['id']
