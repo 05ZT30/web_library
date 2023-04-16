@@ -44,6 +44,7 @@ def login_view(request):
                 request.session['is_login'] = True
                 request.session['username'] = username
                 login(request, user)
+                request.session.modified = True
                 return redirect('/index/')
                 # return render(request, 'index.html', locals())
             else:
