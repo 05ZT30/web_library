@@ -1,23 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm, UserRegisterForm
-from django.contrib.auth.models import Group
-from login.models import MyUser, MyUserManager
-# from .models import MyTeacher
-from django.contrib.auth.forms import AdminPasswordChangeForm
-from django.views.generic.edit import FormView
-from django.contrib.auth import views as auth_views
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib import messages
-# from django.contrib.auth.views import PasswordRestView
-# from django.contrib.auth.forms import PasswordRestForm
+from login.models import MyUser
+from django.contrib.auth.views import LoginView
 
-
-# users_in_manager_group = Group.objects.get(name="Manager").user_set.all()
-# users_in_teacher_group = Group.objects.get(name="Teacher").user_set.all()
-# users_in_student_group = Group.objects.get(name="Student").user_set.all()
-# Create your views here.
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = MyUser.objects.get(username=username)
+        # user = authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            login(self.request, user)
+            if user.is_staff:
+                return redirect('/admin/')
+            else:
+                return redirect('/')
+        else:
+            return self.form_invalid(form)
 
 
 def login_view(request):
@@ -42,7 +42,10 @@ def login_view(request):
                 request.session['username'] = username
                 login(request, user)
                 request.session.modified = True
-                return redirect('/index/')
+                if user.is_admin :
+                    return redirect('/admin/')
+                else:
+                    return redirect('/index/')
                 # return render(request, 'index.html', locals())
             else:
                 message = '密码不正确！'

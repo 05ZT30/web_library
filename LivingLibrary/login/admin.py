@@ -19,6 +19,23 @@ class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='确认密码', widget=forms.PasswordInput)
+    is_teacher = forms.BooleanField(required=False,label='是否为老师')
+    is_admin = forms.BooleanField(required=False,label='是否为管理员')
+    email = forms.EmailField(required=False, label=("邮箱"))
+    card_id = forms.CharField(required=False, label=("卡号"))
+    date_of_birth = forms.DateField(required=False, label=("出生日期"))
+    phone = forms.CharField(required=False, label=("联系电话"))
+    category = forms.CharField(required=False, label=("专业领域"))
+    photo = forms.ImageField(required=False, label=("照片"))
+    introduction = forms.CharField(
+        widget=forms.Textarea, required=False, label=("简介"))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_teacher = cleaned_data.get('is_teacher')
+        category = cleaned_data.get('category')
+        if is_teacher and not category:
+            self.add_error('category', '当该用户为老师时，该字段必填')
 
     class Meta:
         model = MyUser
@@ -48,22 +65,21 @@ class UserChangeForm(forms.ModelForm):
     """
     password = ReadOnlyPasswordHashField(label=("密码"),
                                          help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
-    email = forms.EmailField(required=False,label=("邮箱"))
-    card_id = forms.CharField(required=False,label=("卡号"))
-    date_of_birth = forms.DateField(required=False,label=("出生日期"))
-    phone = forms.CharField(required=False,label=("联系电话"))
-    category = forms.CharField(required=False,label=("专业领域"))
-    photo = forms.ImageField(required=False,label=("照片"))
-    introduction = forms.CharField(widget=forms.Textarea,required=False,label=
-                                   ("简介"))
-    
+    email = forms.EmailField(required=False, label=("邮箱"))
+    card_id = forms.CharField(required=False, label=("卡号"))
+    date_of_birth = forms.DateField(required=False, label=("出生日期"))
+    phone = forms.CharField(required=False, label=("联系电话"))
+    category = forms.CharField(required=False, label=("专业领域"))
+    photo = forms.ImageField(required=False, label=("照片"))
+    introduction = forms.CharField(
+        widget=forms.Textarea, required=False, label=("简介"))
+
     def clean(self):
         cleaned_data = super().clean()
         is_teacher = cleaned_data.get('is_teacher')
         category = cleaned_data.get('category')
         if is_teacher and not category:
             self.add_error('category', '当该用户为老师时，该字段必填')
-
 
     class Meta:
         model = MyUser
@@ -101,7 +117,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('card_id', 'username', 'email', 'date_of_birth', 'password1', 'password2', 'phone', 'email', 'category', 'photo', 'introduction',),
+            'fields': ( 'username', 'password1', 'password2', 'is_teacher','is_admin','card_id','email', 'date_of_birth', 'phone', 'email', 'category', 'photo', 'introduction',),
         }),
     )
     del BaseUserAdmin.search_fields

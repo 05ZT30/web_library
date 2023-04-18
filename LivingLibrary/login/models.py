@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-
-
 class MyUserManager(BaseUserManager):
     def create_user(self, card_id, username, password, email):
         """
@@ -40,8 +38,10 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class MyUser(AbstractBaseUser):
-    card_id = models.CharField(max_length=6, unique=True, verbose_name='卡号',null=True)
+    card_id = models.CharField(
+        max_length=6, unique=True, verbose_name='卡号', null=True)
     username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
         max_length=255,
@@ -55,12 +55,12 @@ class MyUser(AbstractBaseUser):
     introduction = models.TextField(null=True, verbose_name='简介')
     is_active = models.BooleanField(default=True, verbose_name='是否在线')
     is_admin = models.BooleanField(default=False, verbose_name='是否为管理员')
-    is_teacher = models.BooleanField(default=False,verbose_name="是否老师")
+    is_teacher = models.BooleanField(default=False, verbose_name="是否老师")
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['password','is_teacher']
+    REQUIRED_FIELDS = ['password', 'is_teacher']
 
     def __str__(self):
         return self.username

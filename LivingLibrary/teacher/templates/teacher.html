@@ -1,14 +1,14 @@
-<!--
- * @Author: 05ZT30 molly.zheng.work@outlook.com
- * @Date: 2022-05-02 11:21:14
- * @LastEditors: 05ZT30 molly.zheng.work@outlook.com
- * @LastEditTime: 2022-07-12 17:08:02
- * @FilePath: \mysite\login\templates\login\login.html
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 {% extends "main/base.html" %}
 {% block title %}真人导师列表{% endblock %}
 {% load static %}
+{% block css %}
+<link href="{% static 'css/teacher_li.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content%}
-
+<ul>
+    {% for teacher in teachers %}
+        <li>{{ teacher.username }}</li>
+        <li style="background-color: grey;">{{ teacher.category }}</li>
+    {% endfor %}
+</ul>
 {%endblock%}
