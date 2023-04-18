@@ -530,7 +530,7 @@ export class App extends Component {
                                        this.state.selectedDialog && this.state.onlinePKs.includes(this.state.selectedDialog.id) ? "lightgreen" : ""
                                    }
                                    subtitle={
-                                       this.state.selectedDialog && this.state.typingPKs.includes(this.state.selectedDialog.id) ? "typing..." : ""
+                                       this.state.selectedDialog && this.state.typingPKs.includes(this.state.selectedDialog.id) ? "正在输入..." : ""
                                    }
                         />
                     } right={

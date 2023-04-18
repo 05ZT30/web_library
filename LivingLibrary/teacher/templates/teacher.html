@@ -7,8 +7,14 @@
 {% block content%}
 <ul>
     {% for teacher in teachers %}
-        <li>{{ teacher.username }}</li>
-        <li style="background-color: grey;">{{ teacher.category }}</li>
+    <img src="/media/{{ teacher.photo }}"></li>
+    <li>{{ teacher.username }}</li>
+    <li style="background-color: grey;">{{ teacher.category }}</li>
+    {% if teacher.is_active %}
+    <li>在线</li>
+    {% else %}
+    <li>离线</li>
+    {% endif %}
     {% endfor %}
 </ul>
 {%endblock%}
