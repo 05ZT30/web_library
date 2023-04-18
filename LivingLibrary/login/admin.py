@@ -20,7 +20,8 @@ class UserCreationForm(forms.ModelForm):
     password2 = forms.CharField(
         label='确认密码', widget=forms.PasswordInput)
     is_teacher = forms.BooleanField(required=False,label='是否为老师')
-    is_admin = forms.BooleanField(required=False,label='是否为管理员')
+    is_admin = forms.BooleanField(required=False,label='是否为能访问管理界面')
+    is_superuser = forms.BooleanField(required=False,label='是否能管理数据')
     email = forms.EmailField(required=False, label=("邮箱"))
     card_id = forms.CharField(required=False, label=("卡号"))
     date_of_birth = forms.DateField(required=False, label=("出生日期"))
@@ -84,7 +85,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = ('card_id', 'username', 'email', 'password', 'date_of_birth', 'is_teacher', 'phone', 'category', 'photo', 'introduction',
-                  'is_active', 'is_admin')
+                  'is_active', 'is_admin','is_superuser')
 
 
 class ProxyResource(resources.ModelResource):
@@ -110,20 +111,21 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
         ('基本信息', {'fields': ('card_id', 'username', 'password')}),
         ('个人信息', {'fields': ('date_of_birth', 'phone',
          'email', 'category', 'photo', 'introduction',)}),
-        ('权限', {'fields': ('is_admin', 'is_teacher')}),
+        ('权限', {'fields': ('is_admin', 'is_superuser','is_teacher')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ( 'username', 'password1', 'password2', 'is_teacher','is_admin','card_id','email', 'date_of_birth', 'phone', 'email', 'category', 'photo', 'introduction',),
+            'fields': ( 'username', 'password1', 'password2', 'is_teacher','is_admin','is_superuser','card_id','email', 'date_of_birth', 'phone', 'email', 'category', 'photo', 'introduction',),
         }),
     )
     del BaseUserAdmin.search_fields
     ordering = ['id']
     filter_horizontal = ()
     resource_class = ProxyResource
+
 
 
 admin.site.site_header = "管理后台"

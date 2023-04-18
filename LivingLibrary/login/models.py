@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+
+
 class MyUserManager(BaseUserManager):
     def create_user(self, card_id, username, password, email):
         """
@@ -35,6 +37,7 @@ class MyUserManager(BaseUserManager):
             # date_of_birth=date_of_birth,
         )
         user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -55,6 +58,7 @@ class MyUser(AbstractBaseUser):
     introduction = models.TextField(null=True, verbose_name='简介')
     is_active = models.BooleanField(default=True, verbose_name='是否在线')
     is_admin = models.BooleanField(default=False, verbose_name='是否为管理员')
+    is_superuser = models.BooleanField(default=False, verbose_name='是否能管理数据')
     is_teacher = models.BooleanField(default=False, verbose_name="是否老师")
 
     objects = MyUserManager()
