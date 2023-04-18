@@ -48,6 +48,22 @@ class UserChangeForm(forms.ModelForm):
     """
     password = ReadOnlyPasswordHashField(label=("密码"),
                                          help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
+    email = forms.EmailField(required=False,label=("邮箱"))
+    card_id = forms.CharField(required=False,label=("卡号"))
+    date_of_birth = forms.DateField(required=False,label=("出生日期"))
+    phone = forms.CharField(required=False,label=("联系电话"))
+    category = forms.CharField(required=False,label=("专业领域"))
+    photo = forms.ImageField(required=False,label=("照片"))
+    introduction = forms.CharField(widget=forms.Textarea,required=False,label=
+                                   ("简介"))
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        is_teacher = cleaned_data.get('is_teacher')
+        category = cleaned_data.get('category')
+        if is_teacher and not category:
+            self.add_error('category', '当该用户为老师时，该字段必填')
+
 
     class Meta:
         model = MyUser
