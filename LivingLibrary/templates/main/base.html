@@ -30,6 +30,7 @@
             <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="250px" alt="加载失败" />
             <a href="/index/" id="index">主页</a>
             <a href="/chat/" id="chat">聊天</a>
+            <a href="/teacher/" id="teacher">教师列表</a>
             {% if request.session.is_login %}
             <div id="user">
                 <i>{{ request.session.username}}</i>

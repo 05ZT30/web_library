@@ -9,12 +9,10 @@
     {% for teacher in teachers %}
     <img src="/media/{{ teacher.photo }}"></li>
     <li>{{ teacher.username }}</li>
-    <li style="background-color: grey;">{{ teacher.category }}</li>
-    {% if teacher.is_active %}
-    <li>在线</li>
-    {% else %}
-    <li>离线</li>
-    {% endif %}
+    <li style="background-color: grey; width: 40px;">{{ teacher.category }}</li>
+    <a href="/chat/">发起聊天</a>
+    <br>
+    <br>
     {% endfor %}
 </ul>
 {%endblock%}
