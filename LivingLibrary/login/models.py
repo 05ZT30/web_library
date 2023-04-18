@@ -45,7 +45,6 @@ class MyUser(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
         max_length=255,
-        unique=True,
         null=True,
         verbose_name='邮箱'
     )
