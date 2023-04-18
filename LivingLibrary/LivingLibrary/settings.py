@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'simpleui',
     'import_export',
+    'ckeditor',
     # 'password_reset',
 
     'django.contrib.admin',
@@ -139,7 +140,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
-#USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -176,8 +177,8 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media/').replace('\\', '/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/').replace('\\', '/')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
@@ -192,3 +193,63 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # SESSION_COOKIE_DOMAIN = '110.40.190.72'
 SESSION_SAVE_EVERY_REQUEST = True
+
+# 使用ck的工具栏并修改，宽度自适应
+CKEDITOR_CONFIGS = {
+    # django-ckeditor默认使用default配置
+    'default': {
+        # 编辑器宽度自适应
+        'width': 'auto',
+        'height': '300px',
+        # tab键转换空格数
+        'tabSpaces': 4,
+        # 工具栏风格
+        'toolbar': 'Custom',
+        # 工具栏按钮
+        'toolbar_Custom': [
+            # 预览、表情
+            ['Preview', 'Smiley'],
+            # 字体风格
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+            # 字体颜色
+            ['TextColor', 'BGColor'],
+            # 格式、字体、大小
+            ['Format', 'Font', 'FontSize'],
+            # 链接
+            ['Link', 'Unlink'],
+            # 列表
+            ['Image', 'NumberedList', 'BulletedList'],
+            # 居左，居中，居右
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            # 最大化
+            ['Maximize']
+        ],
+        # 加入代码块插件
+        'extraPlugins': ','.join(['codesnippet', 'image2', 'filebrowser', 'widget', 'lineutils']),
+    },
+    # 评论
+    'comment': {
+        # 编辑器宽度自适应
+        'width': 'auto',
+        'height': '140px',
+        # tab键转换空格数
+        'tabSpaces': 4,
+        # 工具栏风格
+        'toolbar': 'Custom',
+        # 工具栏按钮
+        'toolbar_Custom': [
+            # 表情 代码块
+            ['Smiley', 'CodeSnippet'],
+            # 字体风格
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+            # 字体颜色
+            ['TextColor', 'BGColor'],
+            # 链接
+            ['Link', 'Unlink'],
+            # 列表
+            ['NumberedList', 'BulletedList'],
+        ],
+        # 加入代码块插件
+        'extraPlugins': ','.join(['codesnippet']),
+    }
+}

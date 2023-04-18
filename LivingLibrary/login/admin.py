@@ -70,10 +70,10 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('id', 'is_teacher','card_id', 'username',
-                    'email','phone','category', 'is_admin','introduction')
+    list_display = ('id', 'is_teacher', 'card_id', 'username',
+                    'email', 'phone', 'category', 'is_admin', 'introduction')
     list_per_page = 20
-    list_filter = ('card_id', 'username','is_teacher','category')
+    list_filter = ('card_id', 'username', 'is_teacher', 'category')
     fieldsets = (
         ('基本信息', {'fields': ('card_id', 'username', 'password')}),
         ('个人信息', {'fields': ('date_of_birth', 'phone',

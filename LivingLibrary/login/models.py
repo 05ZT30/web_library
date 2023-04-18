@@ -41,7 +41,7 @@ class MyUserManager(BaseUserManager):
         return user
 
 class MyUser(AbstractBaseUser):
-    card_id = models.CharField(max_length=6, unique=True, verbose_name='卡号')
+    card_id = models.CharField(max_length=6, unique=True, verbose_name='卡号',null=True)
     username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
         max_length=255,
