@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm, UserRegisterForm
 from django.contrib.auth.models import Group
 from login.models import MyUser, MyUserManager
-from .models import MyTeacher
+# from .models import MyTeacher
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.views.generic.edit import FormView
 from django.contrib.auth import views as auth_views
@@ -33,11 +33,8 @@ def login_view(request):
             try:
                 user = MyUser.objects.get(username=username)
             except:
-                try:
-                    user = MyTeacher.objects.get(username=username)
-                except:
-                    message = '用户不存在！'
-                    return render(request, 'login.html', locals())
+                message = '用户不存在！'
+                return render(request, 'login.html', locals())
 
             if user.check_password(password):
                 # TODO 增加密码加密

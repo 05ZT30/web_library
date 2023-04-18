@@ -1,5 +1,5 @@
 from django.contrib.admin import ModelAdmin, site
-from login.models import MyTeacher
+# from login.models import MyTeacher
 from django import forms
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.core.exceptions import ValidationError
@@ -8,86 +8,86 @@ from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
 
-class TeacherCreationForm(forms.ModelForm):
-    """A form for creating new users. Includes all the required
-    fields, plus a repeated password."""
-    username = forms.CharField(label='用户名', max_length=30)
-    password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label='确认密码', widget=forms.PasswordInput)
+# class TeacherCreationForm(forms.ModelForm):
+#     """A form for creating new users. Includes all the required
+#     fields, plus a repeated password."""
+#     username = forms.CharField(label='用户名', max_length=30)
+#     password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
+#     password2 = forms.CharField(
+#         label='确认密码', widget=forms.PasswordInput)
 
-    class Meta:
-        model = MyTeacher
-        fields = ('username', 'email', 'date_of_birth')
+#     class Meta:
+#         model = MyTeacher
+#         fields = ('username', 'email', 'date_of_birth')
 
-    def clean_password2(self):
-        # Check that the two password entries match
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise ValidationError("Passwords don't match")
-        return password2
+#     def clean_password2(self):
+#         # Check that the two password entries match
+#         password1 = self.cleaned_data.get("password1")
+#         password2 = self.cleaned_data.get("password2")
+#         if password1 and password2 and password1 != password2:
+#             raise ValidationError("Passwords don't match")
+#         return password2
 
-    def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
-
-
-class TeacherChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    disabled password hash display field.
-    """
-    password = ReadOnlyPasswordHashField(label=("密码"),
-                                         help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
-
-    class Meta:
-        model = MyTeacher
-        fields = ('card_id', 'username', 'category', 'email', 'password', 'date_of_birth', 'phone', 'photo',
-                  'is_active', 'introduction')
+#     def save(self, commit=True):
+#         # Save the provided password in hashed format
+#         user = super().save(commit=False)
+#         user.set_password(self.cleaned_data["password1"])
+#         if commit:
+#             user.save()
+#         return user
 
 
-class ProxyResource(resources.ModelResource):
-    class Meta:
-        model = MyTeacher
-        # export_order：设置导出字段的顺序
-        export_order = ('id', 'username')
+# class TeacherChangeForm(forms.ModelForm):
+#     """A form for updating users. Includes all the fields on
+#     the user, but replaces the password field with admin's
+#     disabled password hash display field.
+#     """
+#     password = ReadOnlyPasswordHashField(label=("密码"),
+#                                          help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
+
+#     class Meta:
+#         model = MyTeacher
+#         fields = ('card_id', 'username', 'category', 'email', 'password', 'date_of_birth', 'phone', 'photo',
+#                   'is_active', 'introduction')
 
 
-class TeacherAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
-    # The forms to add and change user instances
-    form = TeacherChangeForm
-    add_form = TeacherCreationForm
-
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference specific fields on auth.User.
-    list_display = ('id', 'card_id', 'username', 'category',
-                    'email', 'phone', 'photo', 'introduction')
-    list_per_page = 20
-    list_display_links = ('id',)
-    list_filter = ('category', 'username')
-    fieldsets = (
-        ("基本信息", {'fields': ('card_id', 'username', 'password')}),
-        ('个人信息', {'fields': ('email', 'phone',
-         'date_of_birth', 'photo', 'introduction')}),
-        ('权限', {'fields': ('is_admin',)}),
-    )
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('card_id', 'username', 'category', 'email', 'phone', 'photo', 'introduction', 'password1', 'password2'),
-        }),
-    )
-    ordering = ['id']
-    filter_horizontal = ()
-    resource_class = ProxyResource
+# class ProxyResource(resources.ModelResource):
+#     class Meta:
+#         model = MyTeacher
+#         # export_order：设置导出字段的顺序
+#         export_order = ('id', 'username')
 
 
-site.register(MyTeacher, TeacherAdmin)
+# class TeacherAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
+#     # The forms to add and change user instances
+#     form = TeacherChangeForm
+#     add_form = TeacherCreationForm
+
+#     # The fields to be used in displaying the User model.
+#     # These override the definitions on the base UserAdmin
+#     # that reference specific fields on auth.User.
+#     list_display = ('id', 'card_id', 'username', 'category',
+#                     'email', 'phone', 'photo', 'introduction')
+#     list_per_page = 20
+#     list_display_links = ('id',)
+#     list_filter = ('category', 'username')
+#     fieldsets = (
+#         ("基本信息", {'fields': ('card_id', 'username', 'password')}),
+#         ('个人信息', {'fields': ('email', 'phone',
+#          'date_of_birth', 'photo', 'introduction')}),
+#         ('权限', {'fields': ('is_admin',)}),
+#     )
+#     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
+#     # overrides get_fieldsets to use this attribute when creating a user.
+#     add_fieldsets = (
+#         (None, {
+#             'classes': ('wide',),
+#             'fields': ('card_id', 'username', 'category', 'email', 'phone', 'photo', 'introduction', 'password1', 'password2'),
+#         }),
+#     )
+#     ordering = ['id']
+#     filter_horizontal = ()
+#     resource_class = ProxyResource
+
+
+# site.register(MyTeacher, TeacherAdmin)
