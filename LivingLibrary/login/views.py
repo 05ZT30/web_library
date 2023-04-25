@@ -6,9 +6,10 @@ from django.contrib.auth.views import LoginView
 
 class CustomLoginView(LoginView):
     def form_valid(self, form):
-        username = form.cleaned_data.get('username')
+        # username = form.cleaned_data.get('username')
+        card_id = form.cleaned_data.get('card_id')
         password = form.cleaned_data.get('password')
-        user = MyUser.objects.get(username=username)
+        user = MyUser.objects.get(card_id= card_id)
         # user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(self.request, user)
@@ -27,11 +28,11 @@ def login_view(request):
         login_form = UserForm(request.POST)
         message = '请检查填写的内容！'
         if login_form.is_valid():
-            username = login_form.cleaned_data.get('username')
+            card_id = login_form.cleaned_data.get('card_id')
             password = login_form.cleaned_data.get('password')
 
             try:
-                user = MyUser.objects.get(username=username)
+                user = MyUser.objects.get(card_id=card_id)
             except:
                 message = '用户不存在！'
                 return render(request, 'login.html', locals())
@@ -39,7 +40,7 @@ def login_view(request):
             if user.check_password(password):
                 # TODO 增加密码加密
                 request.session['is_login'] = True
-                request.session['username'] = username
+                request.session['username'] = user.username
                 login(request, user)
                 request.session.modified = True
                 if user.is_admin :

@@ -12,8 +12,10 @@ GROUPS_CHOICES = (
 
 
 class UserForm(forms.Form):
-    username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': "请输入用户名", 'autofocus': ''}))
+    #username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(
+    #    attrs={'class': 'form-control', 'placeholder': "请输入用户名", 'autofocus': ''}))
+    card_id = forms.CharField(label="学工号", max_length=128, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': "请输入学工号", 'autofocus': ''}))
     password = forms.CharField(label="密码", max_length=256, widget=forms.PasswordInput(
         attrs={'class': 'form-control',  'placeholder': "请输入密码"}))
     captcha = CaptchaField(label='验证码')
