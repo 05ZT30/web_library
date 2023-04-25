@@ -44,7 +44,7 @@ class MyUserManager(BaseUserManager):
 
 class MyUser(AbstractBaseUser):
     card_id = models.CharField(
-        max_length=6, unique=True, verbose_name='卡号', null=True)
+        max_length=8, unique=True, verbose_name='卡号', null=True)
     username = models.CharField(max_length=30, unique=True, verbose_name='用户名')
     email = models.EmailField(
         max_length=255,
