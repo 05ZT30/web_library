@@ -1137,7 +1137,7 @@
     text-align: center;
     box-sizing: border-box;
     background: #3979aa;
-    color: #fff;
+    /* color: #fff; */
     transition: all .15s ease;
     user-select: none;
     outline: none;
