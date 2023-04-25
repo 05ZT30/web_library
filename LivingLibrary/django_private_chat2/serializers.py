@@ -23,13 +23,14 @@ def serialize_message_model(m: MessageModel, user_id):
         "sender": str(sender_pk),
         "recipient": str(m.recipient.pk),
         "out": is_out,
-        "sender_username": m.sender.get_username()
+        "sender_username": m.sender.username
     }
     return obj
 
 
 def serialize_dialog_model(m: DialogsModel, user_id):
-    username_field = UserModel.USERNAME_FIELD
+    # username_field = UserModel.USERNAME_FIELD
+    username_field = 'username'
     other_user_pk, other_user_username = UserModel.objects.filter(pk=m.user1.pk).values_list('pk',
                                                                                              username_field).first() \
         if m.user2.pk == user_id else UserModel.objects.filter(pk=m.user2.pk).values_list('pk', username_field).first()

@@ -45,7 +45,8 @@ class MyUserManager(BaseUserManager):
 class MyUser(AbstractBaseUser):
     card_id = models.CharField(
         max_length=8, unique=True, verbose_name='卡号', null=True)
-    username = models.CharField(max_length=30,verbose_name='用户名')
+    username = models.CharField(
+        max_length=30, verbose_name='用户名', unique=False)
     email = models.EmailField(
         max_length=255,
         null=True,
@@ -84,6 +85,13 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    # def get_username(self, flag):
+    #     """Return the username for this User."""
+    #     if flag == 1:
+    #         return getattr(self, self.username)
+    #     else:
+    #         return getattr(self, self.USERNAME_FIELD)
 
     class Meta:
         # permissions =

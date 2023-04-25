@@ -49,7 +49,7 @@ class UsersListView(LoginRequiredMixin, ListView):
         users: List[AbstractBaseUser] = context['object_list']
 
         data = [{
-            "username": user.get_username(),
+            "username": user.username,
             "pk": str(user.pk)
         } for user in users]
         return JsonResponse(data, safe=False, **response_kwargs)

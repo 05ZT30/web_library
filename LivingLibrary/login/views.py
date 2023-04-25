@@ -36,11 +36,11 @@ def login_view(request):
             except:
                 message = '用户不存在！'
                 return render(request, 'login.html', locals())
-
+            username = user.username
             if user.check_password(password):
                 # TODO 增加密码加密
                 request.session['is_login'] = True
-                request.session['username'] = user.username
+                request.session['username'] = username
                 login(request, user)
                 request.session.modified = True
                 if user.is_admin :
