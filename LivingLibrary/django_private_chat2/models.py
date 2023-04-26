@@ -24,8 +24,8 @@ class UploadedFile(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Uploaded_by"),
                                     related_name='+', db_index=True)
-    file = models.FileField(verbose_name=_("File"), blank=False, null=False, upload_to=user_directory_path)
-    upload_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Upload date"))
+    file = models.FileField(verbose_name=_("文件"), blank=False, null=False, upload_to=user_directory_path)
+    upload_date = models.DateTimeField(auto_now_add=True, verbose_name=_("上传日期"))
 
     def __str__(self):
         return str(self.file.name)
@@ -33,9 +33,9 @@ class UploadedFile(models.Model):
 
 class DialogsModel(TimeStampedModel):
     id = models.BigAutoField(primary_key=True, verbose_name=_("Id"))
-    user1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("User1"),
+    user1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("用户1"),
                               related_name="+", db_index=True)
-    user2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("User2"),
+    user2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("用户2"),
                               related_name="+", db_index=True)
 
     class Meta:
@@ -63,15 +63,15 @@ class DialogsModel(TimeStampedModel):
 
 class MessageModel(TimeStampedModel, SoftDeletableModel):
     id = models.BigAutoField(primary_key=True, verbose_name=_("Id"))
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Author"),
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("消息发出方"),
                                related_name='from_user', db_index=True)
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Recipient"),
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("消息接收方"),
                                   related_name='to_user', db_index=True)
-    text = models.TextField(verbose_name=_("Text"), blank=True)
+    text = models.TextField(verbose_name=_("文本内容"), blank=True)
     file = models.ForeignKey(UploadedFile, related_name='message', on_delete=models.DO_NOTHING,
-                             verbose_name=_("File"), blank=True, null=True)
+                             verbose_name=_("文件"), blank=True, null=True)
 
-    read = models.BooleanField(verbose_name=_("Read"), default=False)
+    read = models.BooleanField(verbose_name=_("是否已读"), default=False)
     all_objects = models.Manager()
 
     @staticmethod

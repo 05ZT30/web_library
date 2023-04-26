@@ -16,7 +16,7 @@ from login.models import MyUser
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    username = forms.CharField(label='用户名', max_length=30)
+    username = forms.CharField(label='用户名', max_length=30,required=True)
     password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='确认密码', widget=forms.PasswordInput)
@@ -24,7 +24,7 @@ class UserCreationForm(forms.ModelForm):
     is_admin = forms.BooleanField(required=False, label='是否为能访问管理界面')
     is_superuser = forms.BooleanField(required=False, label='是否能管理数据')
     email = forms.EmailField(required=False, label=("邮箱"))
-    card_id = forms.CharField(required=False, label=("卡号"))
+    card_id = forms.CharField(required=True, label=("学工号"))
     date_of_birth = forms.DateField(required=False, label=("出生日期"))
     phone = forms.CharField(required=False, label=("联系电话"))
     category = forms.CharField(required=False, label=("专业领域"))
@@ -68,7 +68,7 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(label=("密码"),
                                          help_text=("未存储原始密码，因此无法查看此用户的密码，但您可以使用<a href=\"../password/\">此表单</a>更改密码。"))
     email = forms.EmailField(required=False, label=("邮箱"))
-    card_id = forms.CharField(required=False, label=("卡号"))
+    card_id = forms.CharField(required=True, label=("学工号"))
     date_of_birth = forms.DateField(required=False, label=("出生日期"))
     phone = forms.CharField(required=False, label=("联系电话"))
     category = forms.CharField(required=False, label=("专业领域"))
