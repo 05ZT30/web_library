@@ -31,6 +31,8 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth import views as auth_views
 from typing import List
 from login.models import MyUser
+from django.conf.global_settings import MEDIA_ROOT
+from django.views.static import serve
 
 UserModel = get_user_model()
 
@@ -64,6 +66,10 @@ urlpatterns = [
     path('users/', UsersListView.as_view(), name='users_list'),
     path('login/', login_views.login_view),
     path('register/', login_views.register_view),
+     #上传media的文件可以被查看，这个很重要，更后边的一个bug有关
+    re_path(r'^index/static/media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    #ckckeditor图片上传
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     # path('change_password/', login_views.ChangePasswordView.as_view(), name='change_password'),
     # path('password_reset/', include('password_reset.urls')),
     path('captcha/', include('captcha.urls')),

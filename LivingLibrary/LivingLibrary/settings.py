@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'simpleui',
     'import_export',
     'ckeditor',
+    'ckeditor_uploader',#带图片上传的ckeditor``
     # 'password_reset',
 
     'django.contrib.admin',
@@ -253,3 +254,5 @@ CKEDITOR_CONFIGS = {
         'extraPlugins': ','.join(['codesnippet']),
     }
 }
+
+CKEDITOR_UPLOAD_PATH = "uploads/"#文件保存为止，因为上边配置了media， 图片将保存至media/uploads下
