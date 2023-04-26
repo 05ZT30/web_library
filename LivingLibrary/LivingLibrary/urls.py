@@ -66,11 +66,7 @@ urlpatterns = [
     path('users/', UsersListView.as_view(), name='users_list'),
     path('login/', login_views.login_view),
     path('register/', login_views.register_view),
-     #上传media的文件可以被查看，这个很重要，更后边的一个bug有关
-    re_path(r'^index/static/media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
-    #ckckeditor图片上传
-    path('ckeditor/', include('ckeditor_uploader.urls')),
-    # path('change_password/', login_views.ChangePasswordView.as_view(), name='change_password'),
+        # path('change_password/', login_views.ChangePasswordView.as_view(), name='change_password'),
     # path('password_reset/', include('password_reset.urls')),
     path('captcha/', include('captcha.urls')),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
@@ -78,6 +74,11 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('logout/', login_views.logout_view),
+    #上传media的文件可以被查看，这个很重要，更后边的一个bug有关
+    re_path(r'^index/static/media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+    #ckckeditor图片上传
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
     re_path(r'', include('django_private_chat2.urls',
             namespace='django_private_chat2')),
 

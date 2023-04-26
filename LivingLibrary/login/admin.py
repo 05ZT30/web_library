@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group, AbstractBaseUser
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import make_password 
+from django.contrib.auth.hashers import make_password
 
 from login.models import MyUser
 # UserModel: AbstractBaseUser = get_user_model()
@@ -16,7 +16,7 @@ from login.models import MyUser
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    username = forms.CharField(label='用户名', max_length=30,required=True)
+    username = forms.CharField(label='用户名', max_length=30, required=True)
     password1 = forms.CharField(label='密码', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='确认密码', widget=forms.PasswordInput)
@@ -90,10 +90,21 @@ class UserChangeForm(forms.ModelForm):
 
 
 class ProxyResource(resources.ModelResource):
+    def before_import_row(self, row, **kwargs):
+        # assert False, 'before_import_row was called'
+        print(f'Row data: {row}')
+        value = row['password']
+        encrypted_password = make_password(value)
+        print(f'Encrypted password: {encrypted_password}')
+        row['password'] = encrypted_password
+        super().before_import_row(row, **kwargs)
     class Meta:
         model = MyUser
         # export_order：设置导出字段的顺序
         export_order = ('is_teacher', 'id', 'username')
+        # exclude = ('id', 'is_active',)
+        skip_unchanged = True
+        report_skipped = False
 
 
 class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
@@ -104,14 +115,16 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('id', 'is_teacher', 'card_id', 'username', 'email', 'phone', 'category', 'is_admin', 'introduction')
+    list_display = ('id', 'is_teacher', 'card_id', 'username',
+                    'email', 'phone', 'category', 'is_admin', 'introduction')
     list_per_page = 20
     list_filter = ('card_id', 'username', 'is_teacher', 'category')
 
     fieldsets = (
         ('基本信息', {'fields': ('card_id', 'username', 'password')}),
-        ('个人信息', {'fields': ('date_of_birth', 'phone', 'email', 'category', 'photo', 'introduction',)}),
-        ('权限', {'fields': ('is_admin', 'is_superuser','is_teacher')}),
+        ('个人信息', {'fields': ('date_of_birth', 'phone',
+         'email', 'category', 'photo', 'introduction',)}),
+        ('权限', {'fields': ('is_admin', 'is_superuser', 'is_teacher')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -122,7 +135,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
                 'username',
                 'password1',
                 'password2',
-                'is_teacher','is_admin','is_superuser','card_id','email',
+                'is_teacher', 'is_admin', 'is_superuser', 'card_id', 'email',
                 'date_of_birth',
                 'phone',
                 'email',
@@ -135,13 +148,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     del BaseUserAdmin.search_fields
     ordering = ['id']
     filter_horizontal = ()
-    
-    def save_model(self, request, obj, form, change):
-        password = form.cleaned_data.get('password')
-        obj.password = make_password(password)
-        super().save_model(request, obj, form, change)
-
-resource_class = ProxyResource
+    resource_class = ProxyResource
 
 
 admin.site.site_header = "管理后台"
