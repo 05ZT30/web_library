@@ -90,6 +90,10 @@ class UserChangeForm(forms.ModelForm):
 
 
 class ProxyResource(resources.ModelResource):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_id = MyUser.objects.all().order_by('-id').first().id + 1
+
     def before_import_row(self, row, **kwargs):
         # assert False, 'before_import_row was called'
         print(f'Row data: {row}')
@@ -98,11 +102,12 @@ class ProxyResource(resources.ModelResource):
         print(f'Encrypted password: {encrypted_password}')
         row['password'] = encrypted_password
         super().before_import_row(row, **kwargs)
+
     class Meta:
         model = MyUser
         # export_order：设置导出字段的顺序
         export_order = ('is_teacher', 'id', 'username')
-        # exclude = ('id', 'is_active',)
+        exclude = ('is_active',)
         skip_unchanged = True
         report_skipped = False
 
