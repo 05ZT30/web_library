@@ -42,9 +42,11 @@ class UsersListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_teacher:
-            return UserModel.objects.filter(is_teacher=False).exclude(id=self.request.user.id)
+        #    return UserModel.objects.filter(is_teacher=False).exclude(id=self.request.user.id)
+            return NULL
         else:
-            return UserModel.objects.filter(is_teacher=True).exclude(id=self.request.user.id)
+           return UserModel.objects.filter(is_teacher=True).exclude(id=self.request.user.id)
+        # return UserModel.objects.filter(is_teacher=True).exclude(id=self.request.user.id)
         # return UserModel.objects.all().exclude(id=self.request.user.id)
 
     def render_to_response(self, context, **response_kwargs):
