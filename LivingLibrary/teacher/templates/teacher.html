@@ -14,7 +14,7 @@
 {%endblock%}
 
 {% block content%}
-<!-- templates/teachers.html -->
+<!-- templates/teacher.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +38,8 @@
             margin: 10px;
             padding: 10px;
             border: 1px solid #ccc;
-            float: left;
+            display: inline-block;
+            margin-right: 5px;
             text-align: center;
             background-color: #fff;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -109,6 +110,30 @@
         .category-nav li.active {
             color: blue;
         }
+
+        .pagination {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .pagination li {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .pagination li:hover {
+            color: blue;
+        }
+
+        .pagination li.active {
+            color: blue;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 <body>
@@ -135,8 +160,8 @@
         <li class="{% if category == '科学' %}active{% endif %}">
                 <a href="?category=科学">科学</a>
         </li>
-        <li class="{% if teacher.category == '心理' %}active{% endif %}">
-                <a href="?teacher.category=心理">心理</a>
+        <li class="{% if category == '心理' %}active{% endif %}">
+                <a href="?category=心理"></a>
         </li>
     </ul>
     <div class="container">
@@ -152,6 +177,24 @@
             {% endif %}
         {% endfor %}
     </div>
+    <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li><a href="?page=1">1</a></li>
+        <li><a href="?page=2">2</a></li>
+        <li><a href="?page=3">3</a></li>
+        <li><a href="?page=4">4</a></li>
+        <li><a href="?page=5">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+    </ul>
+    
 </body>
 </html>
 
