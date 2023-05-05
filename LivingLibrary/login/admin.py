@@ -1,4 +1,5 @@
 # 必须使用这个绝对路径进行引入，不然启动报错
+from django.utils.translation import ugettext_lazy as _
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 from django.contrib import admin
@@ -112,6 +113,55 @@ class ProxyResource(resources.ModelResource):
         report_skipped = False
 
 
+class CardIdListFilter(admin.SimpleListFilter):
+    title = _('班级')
+    parameter_name = 'card_id'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('202206', _('2022级6班')),
+            ('202205', _('2022级5班')),
+            ('202204', _('2022级4班')),
+            ('202203', _('2022级3班')),
+            ('202202', _('2022级2班')),
+            ('202201', _('2022级1班')),
+            ('202106', _('2021级6班')),
+            ('202105', _('2021级5班')),
+            ('202104', _('2021级4班')),
+            ('202103', _('2021级3班')),
+            ('202102', _('2021级2班')),
+            ('202101', _('2021级1班')),
+            ('202006', _('2020级6班')),
+            ('202005', _('2020级5班')),
+            ('202004', _('2020级4班')),
+            ('202003', _('2020级3班')),
+            ('202002', _('2020级2班')),
+            ('202001', _('2020级1班')),
+            ('201906', _('2019级6班')),
+            ('201905', _('2019级5班')),
+            ('201904', _('2019级4班')),
+            ('201903', _('2019级3班')),
+            ('201902', _('2019级2班')),
+            ('201901', _('2019级1班')),
+            ('201806', _('2018级6班')),
+            ('201805', _('2018级5班')),
+            ('201804', _('2018级4班')),
+            ('201803', _('2018级3班')),
+            ('201802', _('2018级2班')),
+            ('201801', _('2018级1班')),
+            ('201706', _('2017级6班')),
+            ('201705', _('2017级5班')),
+            ('201704', _('2017级4班')),
+            ('201703', _('2017级3班')),
+            ('201702', _('2017级2班')),
+            ('201701', _('2017级1班')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(card_id__startswith=self.value())
+
+
 class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -123,7 +173,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     list_display = ('id', 'is_teacher', 'card_id', 'username',
                     'email', 'phone', 'category', 'is_admin', 'introduction')
     list_per_page = 20
-    list_filter = ('card_id', 'username', 'is_teacher', 'category')
+    list_filter = ('username', 'is_teacher', 'category',CardIdListFilter)
 
     fieldsets = (
         ('基本信息', {'fields': ('card_id', 'username', 'password')}),
