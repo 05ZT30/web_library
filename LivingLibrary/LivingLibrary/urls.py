@@ -41,10 +41,7 @@ class UsersListView(LoginRequiredMixin, ListView):
     http_method_names = ['get', ]
 
     def get_queryset(self):
-        if self.request.user.is_teacher:
-        #    return UserModel.objects.filter(is_teacher=False).exclude(id=self.request.user.id)
-            return NULL
-        else:
+        if self.request.user.is_student:
            return UserModel.objects.filter(is_teacher=True).exclude(id=self.request.user.id)
         # return UserModel.objects.filter(is_teacher=True).exclude(id=self.request.user.id)
         # return UserModel.objects.all().exclude(id=self.request.user.id)
