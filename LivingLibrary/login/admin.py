@@ -1,5 +1,6 @@
 # 必须使用这个绝对路径进行引入，不然启动报错
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 from django.contrib import admin
