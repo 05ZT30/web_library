@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.apps import apps
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
 
     'main',
     'login',
-    # 'teacher',
+    'teacher',
 
     'bootstrap4',
     'captcha',
@@ -152,7 +153,11 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [
+#     os.path.join(app_path, 'static') for app_path in
+#     [app.path for app in apps.get_app_configs()]
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
