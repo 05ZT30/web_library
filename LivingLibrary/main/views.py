@@ -10,7 +10,7 @@ def index(request):
 
      context={
           'res':new_list.order_by('-time')[:5],
-          'pic':rollpic
+          'pic':rollpic.order_by('-add_date')[:5],
      }
      return render(request, 'index.html', context=context)
 
