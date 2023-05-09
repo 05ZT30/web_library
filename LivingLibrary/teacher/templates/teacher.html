@@ -7,180 +7,176 @@
 {% endblock %}
 {% block head_box %}
 <img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
-
 <div>
-  <a href="/index/" id="index">返回主页</a>
+    <a href="/index/" id="index">返回主页</a>
 </div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #F5F5F5;
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: 700;
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .teacher-card {
+        width: 200px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        margin-right: 5px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .teacher-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .teacher-card img {
+        max-width: 100%;
+        height: 200px;
+        border-radius: 50%;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .teacher-card h3 {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .teacher-card p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+    }
+
+    .teacher-card .status {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .online {
+        color: green;
+    }
+
+    .offline {
+        color: red;
+    }
+
+    .category-nav {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .category-nav li {
+        display: inline-block;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        color: #666;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .category-nav li:hover {
+        color: blue;
+    }
+
+    .category-nav li.active {
+        color: blue;
+    }
+
+
+    .pagination {
+        text-align: center;
+        display: inline-block;
+        width: auto;
+        padding: 0;
+        margin: 10px;
+    }
+
+    .pagination li {
+        display: inline;
+    }
+
+    .pagination li a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    .pagination li a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .pagination li a:hover:not(.active) {
+        background-color: #bbcdf0;
+    }
+</style>
 {%endblock%}
 
 {% block content%}
-<!-- templates/teacher.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>教师列表</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #F5F5F5;
-        }
-
-        h1 {
-            text-align: center;
-            font-weight: 700;
-            margin-top: 50px;
-            margin-bottom: 30px;
-        }
-       
-        .teacher-card {
-            width: 200px;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            display: inline-block;
-            margin-right: 5px;
-            text-align: center;
-            background-color: #fff;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .teacher-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .teacher-card img {
-            max-width: 100%;
-            height: 200px;
-            border-radius: 50%;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .teacher-card h3 {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .teacher-card p {
-            margin-top: 5px;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #666;
-        }
-
-        .teacher-card .status {
-            margin-top: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .online {
-            color: green;
-        }
-
-        .offline {
-            color: red;
-        }
-
-        .category-nav {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .category-nav li {
-            display: inline-block;
-            margin-right: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            color: #666;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .category-nav li:hover {
-            color: blue;
-        }
-
-        .category-nav li.active {
-            color: blue;
-        }
-
-
-        .pagination {
-            text-align: center;
-            display: inline-block;
-            width: auto;
-            padding: 0;
-            margin: 10px;
-        }
-        .pagination li {display: inline;}
-        .pagination li a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-        }
-        .pagination li a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .pagination li a:hover:not(.active) {background-color: #bbcdf0;}
-
-    </style>
-</head>
-<body>
-    <h1>教师列表</h1>
-    <ul class="category-nav">
-        <li class="{% if category == 'all' %}active{% endif %}">
-            <a href="?category=all">全部</a>
-        </li>
-        <li class="{% if category == '语文' %}active{% endif %}">
-            <a href="?category=语文">语文</a>
-        </li>
-        <li class="{% if category == '数学' %}active{% endif %}">
-            <a href="?category=数学">数学</a>
-        </li>
-        <li class="{% if category == '英语' %}active{% endif %}">
-            <a href="?category=英语">英语</a>
-        </li>
-        <li class="{% if category == '计算机' %}active{% endif %}">
-            <a href="?category=计算机">计算机</a>
-        </li>
-        <li class="{% if category == '生物' %}active{% endif %}">
-                <a href="?category=生物">生物</a>
-        </li>
-        <li class="{% if category == '科学' %}active{% endif %}">
-                <a href="?category=科学">科学</a>
-        </li>
-        <li class="{% if category == '心理' %}active{% endif %}">
-                <a href="?category=心理">心理</a>
-        </li>
-    </ul>
-    <div class="container">
-        {% for teacher in teachers %}
-            {% if category == 'all' or category == teacher.subject %}
-                <div class="teacher-card">
-                    <img src="/media/{{ teacher.photo }}" alt="{{ teacher.username }}的照片">
-                    <h3>{{ teacher.username }}</h3>
-                    <p>{{ teacher.cateogry }}</p>
-                    <a href="/chat/">发起聊天</a>
-                    </p>
-                </div>
-            {% endif %}
-        {% endfor %}
-        <ul class="pagination">
-            {{page_string}}
-        </ul>
+<h1>教师列表</h1>
+<ul class="category-nav">
+    <li class="{% if category == 'all' %}active{% endif %}">
+        <a href="?category=all">全部</a>
+    </li>
+    <li class="{% if category == '语文' %}active{% endif %}">
+        <a href="?category=语文">语文</a>
+    </li>
+    <li class="{% if category == '数学' %}active{% endif %}">
+        <a href="?category=数学">数学</a>
+    </li>
+    <li class="{% if category == '英语' %}active{% endif %}">
+        <a href="?category=英语">英语</a>
+    </li>
+    <li class="{% if category == '计算机' %}active{% endif %}">
+        <a href="?category=计算机">计算机</a>
+    </li>
+    <li class="{% if category == '生物' %}active{% endif %}">
+        <a href="?category=生物">生物</a>
+    </li>
+    <li class="{% if category == '科学' %}active{% endif %}">
+        <a href="?category=科学">科学</a>
+    </li>
+    <li class="{% if category == '心理' %}active{% endif %}">
+        <a href="?category=心理">心理</a>
+    </li>
+</ul>
+<div class="container">
+    {% for teacher in teachers %}
+    {% if category == 'all' or category == teacher.subject %}
+    <div class="teacher-card">
+        <img src="/media/{{ teacher.photo }}" alt="{{ teacher.username }}的照片">
+        <h3>{{ teacher.username }}</h3>
+        <p>{{ teacher.cateogry }}</p>
+        <a href="/chat/">发起聊天</a>
+        </p>
     </div>
-    
-</body>
-</html>
+    {% endif %}
+    {% endfor %}
+    <ul class="pagination">
+        {{page_string}}
+    </ul>
+</div>
 
 
 {%endblock%}
