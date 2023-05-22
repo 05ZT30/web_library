@@ -1,0 +1,2 @@
+﻿is_teacher,username,card_id,password,category
+如果是老师则为1，如果是学生则为0,此栏输入姓名,此栏输入学号或者手机号作为登录的账号,密码,如果是老师，则必须要填写该栏
