@@ -3,6 +3,7 @@
 from django.utils.translation import gettext_lazy as _
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
+from import_export.formats import base_formats
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.models import Group, AbstractBaseUser
@@ -167,6 +168,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
+    formats = (base_formats.XLS,base_formats.XLSX )
 
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
