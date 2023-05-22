@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "daphne",
-    "django.contrib.sites",
+    # "django.contrib.sites",
     "simpleui",
     "import_export",
     "ckeditor",
@@ -153,7 +153,7 @@ USE_TZ = False
 
 STATIC_URL = "/static/"
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # STATICFILES_DIRS = [
 #     os.path.join(app_path, 'static') for app_path in
 #     [app.path for app in apps.get_app_configs()]
