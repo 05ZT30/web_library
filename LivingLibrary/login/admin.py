@@ -267,7 +267,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
 
         # 创建HttpResponse对象并设置Content-Disposition标头，以便将文件作为附件下载
         response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="import_template.xls"'
+        response["Content-Disposition"] = 'attachment; filename="通用导入模板.xls"'
 
         # 将DataFrame对象写入Excel文件中
         wb = openpyxl.Workbook()
