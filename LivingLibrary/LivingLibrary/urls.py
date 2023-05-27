@@ -71,6 +71,7 @@ urlpatterns = [
     path("index/", main_views.index),
     path("index/<int:num>/", main_views.detail, name="detail"),
     path("teacher/", teacher_views.index),
+    path("teacher/teacherDetail", teacher_views.teacherDetail),
     path("users/", UsersListView.as_view(), name="users_list"),
     path("login/", login_views.login_view),
     path("register/", login_views.register_view),
