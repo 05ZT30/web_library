@@ -73,7 +73,7 @@ class MessageModel(TimeStampedModel, SoftDeletableModel):
 
     read = models.BooleanField(verbose_name=_("是否已读"), default=False)
     all_objects = models.Manager()
-    is_removed = models.BooleanField(verbose_name="是否隐式删除？（隐式删除即不显示在聊天界面中，但是保留该记录在数据库中）")
+    # is_removed = models.BooleanField(verbose_name="是否隐式删除？（隐式删除即不显示在聊天界面中，但是保留该记录在数据库中）")
     created = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
     modified = models.DateTimeField(verbose_name="修改时间", auto_now_add=True)
 
