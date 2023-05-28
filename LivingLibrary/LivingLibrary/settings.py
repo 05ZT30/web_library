@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "chat",
-    "chat2",
+    # "chat2",
     "django_private_chat2",
     "main",
     "login",

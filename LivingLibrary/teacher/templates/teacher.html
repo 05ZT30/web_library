@@ -6,11 +6,24 @@
 <link href="{% static 'css/body.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block head_box %}
-<img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="300px" alt="加载失败" />
+<img src="{% static 'pictures/HeadPicture.jpg' %}" width="100%" height="250px" alt="加载失败" />
 <div>
-    <a href="/index/" id="index">返回主页</a>
+    <a href="/index/" id="index">主页</a>
+    <a href="/chat/" id="chat">聊天</a>
 </div>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+{% if request.session.is_login %}
+            <div id="user">
+                <i>{{ request.session.username}}</i>
+                <a href="/logout/" id="logout">登出</a>
+            </div>
+            {% else %}
+            <div id="login">
+                <a href="/login/"> 用户登录 </a>
+                <!-- <a href="/login_teacher/"> 教师登录 </a> -->
+                <!-- <a href="/login_manager/"> 管理员登录 </a> -->
+            </div>
+{% endif %}
 <style>
     body {
         font-family: 'Open Sans', sans-serif;
@@ -133,42 +146,80 @@
 </style>
 {%endblock%}
 
+
+
 {% block content%}
-<h1>教师列表</h1>
+    {#  添加一个教师的检索功能  #}
+{#    <div  style="float: right;width: 30px">#}
+{#        <form method="get">#}
+{#            <div class="input-group">#}
+{#              <input type="text" class="form-control" name="q" value="{{ q_name }}"  placeholder="Search for...">#}
+{#              <span class="input-group-btn">#}
+{#                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>#}
+{#              </span>#}
+{#            </div><!-- /input-group -->#}
+{#        </form>#}
+{#    </div>#}
+
+    <div class="input-group" style="width: 20%;margin-left: 80%;margin-top: 10px">
+        <form method="get">
+            <div class="input-group">
+              <input type="text" class="form-control" name="q" value="{{ q_name }}"  placeholder="请输入教师的名称" style="margin-right: 5px">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit" >【搜 索】</button>
+              </span>
+            </div>
+        </form>
+    </div><!-- /input-group -->
+
+<h1 style="margin-top: 10px">教师列表</h1>
 <ul class="category-nav">
     <li class="{% if category == 'all' %}active{% endif %}">
-        <a href="?category=all">全部</a>
+        <a href="?category=all&q={{ q_name }}">全部</a>
     </li>
     <li class="{% if category == '语文' %}active{% endif %}">
-        <a href="?category=语文">语文</a>
+        <a href="?category=语文&q={{ q_name }}">语文</a>
     </li>
     <li class="{% if category == '数学' %}active{% endif %}">
-        <a href="?category=数学">数学</a>
+        <a href="?category=数学&q={{ q_name }}">数学</a>
     </li>
     <li class="{% if category == '英语' %}active{% endif %}">
-        <a href="?category=英语">英语</a>
+        <a href="?category=英语&q={{ q_name }}">英语</a>
     </li>
     <li class="{% if category == '计算机' %}active{% endif %}">
-        <a href="?category=计算机">计算机</a>
+        <a href="?category=计算机&q={{ q_name }}">计算机</a>
     </li>
     <li class="{% if category == '生物' %}active{% endif %}">
-        <a href="?category=生物">生物</a>
+        <a href="?category=生物&q={{ q_name }}">生物</a>
     </li>
     <li class="{% if category == '科学' %}active{% endif %}">
-        <a href="?category=科学">科学</a>
+        <a href="?category=科学&q={{ q_name }}">科学</a>
     </li>
     <li class="{% if category == '心理' %}active{% endif %}">
-        <a href="?category=心理">心理</a>
+        <a href="?category=心理&q={{ q_name }}">心理</a>
     </li>
 </ul>
 <div class="container">
     {% for teacher in teachers %}
     {% if category == 'all' or category == teacher.subject %}
     <div class="teacher-card">
-        <img src="/media/{{ teacher.photo }}" alt="{{ teacher.username }}的照片">
+        <a href="/teacher/teacherDetail?card_id={{ teacher.card_id }}">
+            <img src="/media/{{ teacher.photo }}" alt="{{ teacher.username }}的照片" >
+        </a>
         <h3>{{ teacher.username }}</h3>
         <p>{{ teacher.cateogry }}</p>
         <a href="/chat/">发起聊天</a>
+        <!-- <button onclick="handleChatSelected(chat)">选择聊天</button>
+
+        <script>
+            function handleChatSelected(chat) {
+                // 找到React组件的根元素
+                const rootElement = document.getElementById('react-component-root');
+
+                // 调用React组件的handleChatSelected方法
+                rootElement.handleChatSelected(chat);
+            }
+        </script> -->
         </p>
     </div>
     {% endif %}
@@ -177,6 +228,8 @@
         {{page_string}}
     </ul>
 </div>
+{%endblock%}
 
-
+{%block js%}
+<!-- <script src="{% static 'js/main0.js' %}"></script> -->
 {%endblock%}

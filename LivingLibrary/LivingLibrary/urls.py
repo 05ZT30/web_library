@@ -62,7 +62,7 @@ urlpatterns = [
     re_path(
         r"", include("django_private_chat2.urls", namespace="django_private_chat2")
     ),
-    path("chat2/", include("chat2.urls")),
+    # path("chat2/", include("chat2.urls")),
     path(
         "chat/",
         login_required(TemplateView.as_view(template_name="chat.html")),
@@ -71,6 +71,7 @@ urlpatterns = [
     path("index/", main_views.index),
     path("index/<int:num>/", main_views.detail, name="detail"),
     path("teacher/", teacher_views.index),
+    path("teacher/teacherDetail", teacher_views.teacherDetail),
     path("users/", UsersListView.as_view(), name="users_list"),
     path("login/", login_views.login_view),
     path("register/", login_views.register_view),
